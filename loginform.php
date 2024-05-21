@@ -17,13 +17,8 @@ if(isset($_SESSION['auth'])) {
         exit();
     }
 }
-
-// Rest of your HTML and PHP code
 ?>
 
-
-// Rest of your HTML and PHP code
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
