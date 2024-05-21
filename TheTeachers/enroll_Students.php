@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('config/db_conn.php');
+include('../database/db_conn.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['addSubject'], $_POST['student_id'], $_POST['subjects'])) {

@@ -1,6 +1,6 @@
 <?php 
 // Include file for database connection
-include('config/db_conn.php');
+include('../database/db_conn.php');
 
 // Check if the request method is POST
 if(isset($_POST['UpdateUser'])) {

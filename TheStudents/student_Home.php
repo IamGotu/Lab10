@@ -9,7 +9,7 @@ if (!isset($_SESSION['auth'])) {
 }
 
 // Include necessary files
-include('../config/db_conn.php');
+include('../database/db_conn.php');
 include('../includes/header.php');
 include('topbar.php');
 include('sidebar.php');

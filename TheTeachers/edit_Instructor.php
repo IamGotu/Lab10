@@ -9,7 +9,7 @@ if (!isset($_SESSION['auth'])) {
 }
 
 // Include necessary files
-include('config/db_conn.php');
+include('../database/db_conn.php');
 
 if (isset($_POST['updateTeacher'])) {
     $teacher_id = $_POST['edit_teacher_id'];
