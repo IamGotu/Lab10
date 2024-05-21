@@ -42,7 +42,7 @@ if (!isset($_SESSION['auth'])) {
 
                 <li class="nav-header">Function</li>
                 <li class="nav-item">
-                    <a href="../TheAdmin/instructors.php" class="nav-link">
+                    <a href="../TheStudents/instructors.php" class="nav-link">
                         <i class="nav-icon far fa-user"></i>
                         <p>
                             Teachers
@@ -50,7 +50,7 @@ if (!isset($_SESSION['auth'])) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheAdmin/Students.php" class="nav-link">
+                    <a href="../TheStudents/Students.php" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
                             Student
@@ -58,7 +58,7 @@ if (!isset($_SESSION['auth'])) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheAdmin/enroll_Subjects.php" class="nav-link">
+                    <a href="../TheStudents/enroll_Subjects.php" class="nav-link">
                         <i class="nav-icon fa fa-check-circle"></i>
                         <p>
                             Enroll Subject
@@ -66,7 +66,7 @@ if (!isset($_SESSION['auth'])) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheAdmin/Subjects.php" class="nav-link">
+                    <a href="../TheStudents/Subjects.php" class="nav-link">
                         <i class="nav-icon fa fa-book"></i>
                         <p>
                             Subjects

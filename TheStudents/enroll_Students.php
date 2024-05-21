@@ -30,11 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['status'] = "Error updating subjects: " . mysqli_error($conn);
         }
 
-        header('Location: ../TheAdmin/enroll_Subjects.php');
+        header('Location: ../TheStudents/enroll_Subjects.php');
         exit();
     } else {
         $_SESSION['status'] = "No subjects selected";
-        header('Location: ../TheAdmin/enroll_Subjects.php');
+        header('Location: ../TheStudents/enroll_Subjects.php');
         exit();
     }
 }

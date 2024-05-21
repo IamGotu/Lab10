@@ -24,7 +24,7 @@ if (isset($_GET['student_id'])) {
     }
 } else {
     // Redirect if student_id is not set
-    header('Location: ../TheAdmin/enroll_Subjects.php');
+    header('Location: ../TheStudents/enroll_Subjects.php');
     exit();
 }
 

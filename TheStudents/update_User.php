@@ -25,7 +25,7 @@ if(isset($_POST['UpdateUser'])) {
     
     if(!in_array($file_extension, $allowed_extension)) {
         $_SESSION['status'] = "You are allowed with only jpg, png, jpeg image";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     }
 
@@ -42,11 +42,11 @@ if(isset($_POST['UpdateUser'])) {
     if (mysqli_stmt_execute($stmt)) {
         move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'uploads/'.$prof_pic); // Move uploaded file with original name
         $_SESSION['status'] = "User Update Successfully"; // Set success message
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     } else {
         $_SESSION['status'] = "Profile Picture Updating Failed";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     }
 } else {

@@ -26,11 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editSubjectbtn'], $_PO
     }
 
     // Redirect back to enroll_Subjects.php
-    header('Location: ../TheAdmin/enroll_Subjects.php');
+    header('Location: ../TheStudents/enroll_Subjects.php');
     exit();
 } else {
     $_SESSION['status'] = "Invalid request";
-    header('Location: ../TheAdmin/enroll_Subjects.php');
+    header('Location: ../TheStudents/enroll_Subjects.php');
     exit();
 }
 ?>

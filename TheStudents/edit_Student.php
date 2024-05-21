@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editUserbtn'])) {
 
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
-    header('Location: ../TheAdmin/Students.php'); // Redirect back to the index page
+    header('Location: ../TheStudents/Students.php'); // Redirect back to the index page
     exit();
 } else {
     echo "Form not submitted correctly.";

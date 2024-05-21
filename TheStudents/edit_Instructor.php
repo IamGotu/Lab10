@@ -26,11 +26,11 @@ if (isset($_POST['updateTeacher'])) {
 
     if ($update_result) {
         $_SESSION['status'] = "Teacher details updated successfully";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit();
     } else {
         $_SESSION['status'] = "Failed to update teacher details. Please try again.";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit();
     }
 }

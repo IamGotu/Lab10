@@ -50,7 +50,7 @@ include('sidebar.php');
               <div class="icon">
                 <i class="fas fa-chalkboard-teacher"></i>
               </div>
-              <a href="../TheAdmin/instructors.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheStudents/instructors.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -64,7 +64,7 @@ include('sidebar.php');
               <div class="icon">
                 <i class="fas fa-user-graduate"></i>
               </div>
-              <a href="../TheAdmin/Students.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheStudents/Students.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -78,7 +78,7 @@ include('sidebar.php');
               <div class="icon">
                 <i class="fas fa-clipboard-check"></i>
               </div>
-              <a href="../TheAdmin/enroll_Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheStudents/enroll_Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -92,7 +92,7 @@ include('sidebar.php');
               <div class="icon">
                 <i class="fas fa-book"></i>
               </div>
-              <a href="../TheAdmin/Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheStudents/Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           

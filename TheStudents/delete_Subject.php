@@ -19,11 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteSubjectbtn'])) {
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 
-    header('Location: ../TheAdmin/enroll_Subjects.php');
+    header('Location: ../TheStudents/enroll_Subjects.php');
     exit();
 } else {
     $_SESSION['status'] = "Invalid request";
-    header('Location: ../TheAdmin/enroll_Subjects.php');
+    header('Location: ../TheStudents/enroll_Subjects.php');
     exit();
 }
 ?>

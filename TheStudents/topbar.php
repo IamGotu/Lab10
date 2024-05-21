@@ -9,7 +9,7 @@
       <a href="../TheStudents/student_Home.php" class="nav-link">Home</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="../TheAdmin/contact.php" class="nav-link">Contact</a>
+      <a href="../TheStudents/contact.php" class="nav-link">Contact</a>
     </li>
   </ul>
 

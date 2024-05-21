@@ -30,7 +30,7 @@ if(isset($_POST['UpdateTeacher'])) {
 
     if($count > 0) {
         $_SESSION['status'] = "Email already exists"; // Set error message
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     }
 
@@ -46,17 +46,17 @@ if(isset($_POST['UpdateTeacher'])) {
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
         $_SESSION['status'] = "Teacher Update Successfully"; // Set success message
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     } else {
         $_SESSION['status'] = "Teacher Updating Failed";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     }
 } else {
     // Display an error message if the form was not submitted
     $_SESSION['status'] = "Teacher Updating Failed";
-    header("Location: ../TheAdmin/instructors.php");
+    header("Location: ../TheStudents/instructors.php");
     exit(0);
 }
 ?>

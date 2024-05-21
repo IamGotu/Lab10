@@ -34,7 +34,7 @@ if(isset($_POST['addTeacher'])) {
 
     if($count > 0) {
         $_SESSION['status'] = "Email already exists in the database";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     }
 
@@ -50,11 +50,11 @@ if(isset($_POST['addTeacher'])) {
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
         $_SESSION['status'] = "Teacher added successfully";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     } else {
         $_SESSION['status'] = "Error adding teacher";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     }
 } elseif(isset($_POST['deleteTeacher'])) {
@@ -73,17 +73,17 @@ if(isset($_POST['addTeacher'])) {
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
         $_SESSION['status'] = "Teacher deleted successfully";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     } else {
         $_SESSION['status'] = "Error deleting teacher";
-        header('Location: ../TheAdmin/instructors.php');
+        header('Location: ../TheStudents/instructors.php');
         exit(0);
     }
 } else {
     // Display an error message if the form was not submitted
     $_SESSION['status'] = "Teacher Action Failed";
-    header("Location: ../TheAdmin/instructors.php");
+    header("Location: ../TheStudents/instructors.php");
     exit(0);
 }
 ?>
