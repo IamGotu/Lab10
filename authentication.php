@@ -8,7 +8,7 @@ function checkAuth() {
 }
 
 function authenticate($email, $password) {
-    include('config/db_conn.php');
+    include('database/db_conn.php');
     
     $email = mysqli_real_escape_string($conn, $email);
     $password = mysqli_real_escape_string($conn, $password);

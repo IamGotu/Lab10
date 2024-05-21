@@ -39,13 +39,32 @@ include('sidebar.php');
           <input type="email" id="email" name="email" class="form-control" placeholder="Email">
         </div>
         <div class="form-group">
+          <input type="hidden" id="password" name="password" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" name="address" class="form-control" placeholder="Address">
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="text" id="age" name="age" class="form-control" placeholder="Age">
+        </div>
+        <div class="form-group">
+          <label for="edit_gender">Gender</label>
+          <select id="edit_gender" name="edit_gender" class="form-control" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label for="course">Course</label>
           <input type="text" id="course" name="course" class="form-control" placeholder="Course">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="addUser" class="btn btn-primary">Save</button>
+        <button type="submit" name="addStudent" class="btn btn-primary">Save</button>
       </div>
       </form>
     </div>
@@ -72,8 +91,33 @@ include('sidebar.php');
           <input type="email" id="edit_email" name="edit_email" class="form-control" placeholder="Email">
         </div>
         <div class="form-group">
+          <label for="address">Address</label>
+          <input type="address" id="address" name="address" class="form-control" placeholder="Address">
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="text" id="age" name="age" class="form-control" placeholder="Age">
+        </div>
+        <div class="form-group">
+          <label for="edit_gender">Gender</label>
+          <select id="edit_gender" name="edit_gender" class="form-control" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label for="edit_course">Course</label>
           <input type="text" id="edit_course" name="edit_course" class="form-control" placeholder="Course">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+          <span id="passwordError" style="color: red;"></span>
         </div>
       </div>
       <div class="modal-footer">
@@ -150,6 +194,9 @@ include('sidebar.php');
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Address</th>
+                  <th>Age</th>
+                  <th>Gender</th>
                   <th>Course</th>
                   <th>Actions</th>
                 </tr>
@@ -170,6 +217,9 @@ include('sidebar.php');
                       <td><?php echo $row['student_id'] ?></td>
                       <td><?php echo $row['full_name'] ?></td>
                       <td><?php echo $row['email'] ?></td>
+                      <td><?php echo $row['address'] ?></td>
+                      <td><?php echo $row['age'] ?></td>
+                      <td><?php echo $row['gender'] ?></td>
                       <td><?php echo $row['course'] ?></td>
                       <td>
                         <!-- Edit Student Button -->

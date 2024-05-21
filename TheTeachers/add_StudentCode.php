@@ -3,7 +3,7 @@ session_start();
 include('../database/db_conn.php');
 
 // Check if the form was submitted to add a student
-if (isset($_POST['addUser'])) {
+if (isset($_POST['addStudent'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $course = $_POST['course'];

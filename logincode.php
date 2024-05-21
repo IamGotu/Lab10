@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('config/db_conn.php');
+include('database/db_conn.php');
 
 if(isset($_POST['login_btn'])) {
     $email = $_POST['student_id'];

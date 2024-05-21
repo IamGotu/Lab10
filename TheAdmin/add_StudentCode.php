@@ -3,12 +3,16 @@ session_start();
 include('../database/db_conn.php');
 
 // Check if the form was submitted to add a student
-if (isset($_POST['addUser'])) {
+if (isset($_POST['addStudent'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $address = $_POST['address'];
+    $age = $_POST['age'];
+    $gender = $_POST['gender'];
     $course = $_POST['course'];
+    $password = '12345';
 
-    $insert_query = "INSERT INTO student_list (full_name, email, course) VALUES (?, ?, ?)";
+    $insert_query = "INSERT INTO student_list (full_name, email, password, address, age, gender, course) VALUES (?, ?, ?, ?, ?, ?, ?)";
     
     // Prepare the statement
     $stmt = mysqli_prepare($conn, $insert_query);
