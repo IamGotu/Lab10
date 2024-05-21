@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('config/db_conn.php');
+include('../config/db_conn.php');
 
 // Check if the form was submitted to add a student
 if (isset($_POST['addUser'])) {
@@ -26,7 +26,7 @@ if (isset($_POST['addUser'])) {
         $_SESSION['status'] = "Error adding student: " . mysqli_error($conn);
     }
 
-    header('Location: ../TheAdmin/Students.php');
+    header('Location: ../TheAdmin/student_list.php');
     exit();
 }
 
@@ -54,11 +54,11 @@ if (isset($_POST['deleteUserbtn'])) {
         $_SESSION['status'] = "Error deleting student: " . mysqli_error($conn);
     }
 
-    header('Location: ../TheAdmin/Students.php');
+    header('Location: ../TheAdmin/student_list.php');
     exit();
 }
 
-// If the form was not submitted to add or delete a student, redirect back to the Students.php page
-header('Location: ../TheAdmin/Students.php');
+// If the form was not submitted to add or delete a student, redirect back to the student_list.php page
+header('Location: ../TheAdmin/student_list.php');
 exit();
 ?>
