@@ -10,7 +10,7 @@ if (!isset($_SESSION['auth'])) {
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../TheAdmin/admin_Home.php" class="brand-link">
+    <a href="../TheStudents/student_Home.php" class="brand-link">
         <img src="assets/dist/img/RMK.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Rumaken University</span>
     </a>
@@ -32,7 +32,7 @@ if (!isset($_SESSION['auth'])) {
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="../TheAdmin/admin_Home.php" class="nav-link"> <!-- Changed link here -->
+                    <a href="../TheStudents/student_Home.php" class="nav-link"> <!-- Changed link here -->
                         <i class="nav-icon fas fa-school"></i> <!-- Changed icon here -->
                         <p>
                             University

@@ -1,12 +1,26 @@
 <?php
 session_start();
 
-// Check if user is already logged in
 if(isset($_SESSION['auth'])) {
-    $_SESSION['auth_status'] = "You are already logged in";
-    header('Location: ../TheAdmin/admin_Home.php');
-    exit();
+    // Redirecting to the appropriate page based on user role
+    if($_SESSION['auth'] == 'admin') {
+        $_SESSION['auth_status'] = "You are already logged in";
+        header('Location: ../TheAdmin/admin_Home.php');
+        exit();
+    } elseif($_SESSION['auth'] == 'student') {
+        $_SESSION['auth_status'] = "You are already logged in";
+        header('Location: ../TheStudents/student_Home.php');
+        exit();
+    } elseif($_SESSION['auth'] == 'teacher') {
+        $_SESSION['auth_status'] = "You are already logged in";
+        header('Location: ../TheTeachers/teachers_Home.php');
+        exit();
+    }
 }
+
+// Rest of your HTML and PHP code
+?>
+
 
 // Rest of your HTML and PHP code
 ?>

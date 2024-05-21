@@ -138,7 +138,7 @@
     </div>
     <p style="text-align: center; margin-bottom: 20px;">For any inquiries or issues regarding the website, please feel free to contact any of the creators.</p>
     <div style="text-align: center;">
-        <a href="../TheAdmin/admin_Home.php" class="btn">Back to Home</a>
+        <a href="../TheStudents/student_Home.php" class="btn">Back to Home</a>
     </div>
 </div>
 
