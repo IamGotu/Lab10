@@ -7,7 +7,7 @@ if(isset($_POST['login_btn'])) {
     $password = $_POST['password'];
 
     // Prepare SQL statement
-    $query = "SELECT * FROM teachers WHERE email = ? AND password = ?";
+    $query = "SELECT * FROM admin WHERE email = ? AND password = ?";
     $stmt = mysqli_prepare($conn, $query);
 
     // Bind parameters
@@ -29,7 +29,7 @@ if(isset($_POST['login_btn'])) {
         $_SESSION['auth_user'] = $row;
 
         // Redirect to user profile page
-        header('Location: User_Profile.php');
+        header('Location: ../TheAdmin/admin_Home.php');
         exit();
     } else {
         // Invalid credentials, redirect to login page with error message

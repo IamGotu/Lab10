@@ -4,7 +4,7 @@ session_start();
 // Check if user is already logged in
 if(isset($_SESSION['auth'])) {
     $_SESSION['auth_status'] = "You are already logged in";
-    header('Location: index.php');
+    header('Location: ../TheAdmin/admin_Home.php');
     exit();
 }
 

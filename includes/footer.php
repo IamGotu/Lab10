@@ -25,13 +25,13 @@
 </html>
     <div class="float-right">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="terms.php">Terms of Service</a></li>
-            <li class="list-inline-item"><a href="cookie.php">Cookie Notice</a></li>
-            <li class="list-inline-item"><a href="privacy.php">Privacy Policy</a></li>
+            <li class="list-inline-item"><a href="../TheAdmin/terms.php">Terms of Service</a></li>
+            <li class="list-inline-item"><a href="../TheAdmin/cookie.php">Cookie Notice</a></li>
+            <li class="list-inline-item"><a href="../TheAdmin/privacy.php">Privacy Policy</a></li>
             <li class="list-inline-item">Creators:
                 <a href="https://www.facebook.com/Russellxd.newbie">Russell</a>,
                 <a href="https://www.facebook.com/ken.bacaresas">Kenneth</a>,
-                <a href="https://www.facebook.com/profile.php?id=100074081229184">Mark John          .                  </a>
+                <a href="https://www.facebook.com/profile.php?id=100074081229184">Mark John</a>
             </li>
         </ul>
     </div>

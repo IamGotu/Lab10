@@ -13,7 +13,7 @@ function authenticate($email, $password) {
     $email = mysqli_real_escape_string($conn, $email);
     $password = mysqli_real_escape_string($conn, $password);
     
-    $query = "SELECT * FROM teachers WHERE email = '$email'";
+    $query = "SELECT * FROM admin WHERE email = '$email'";
     $result = mysqli_query($conn, $query);
     
     if (!$result || mysqli_num_rows($result) == 0) {
