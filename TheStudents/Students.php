@@ -117,7 +117,7 @@ include('sidebar.php');
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Enroll Students</li>
+          <li class="breadcrumb-item active">Enrolled Students</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -138,9 +138,7 @@ include('sidebar.php');
         ?>
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Enroll Students</h3>
-            <!-- Enroll Student Button -->
-            <button type="button" class="btn btn-primary bt-sm float-right" data-toggle="modal" data-target="#enrollStudentModal">Enroll Student</button>
+            <h3 class="card-title">Enrolled Students</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -151,7 +149,6 @@ include('sidebar.php');
                   <th>Name</th>
                   <th>Email</th>
                   <th>Course</th>
-                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -171,12 +168,6 @@ include('sidebar.php');
                       <td><?php echo $row['full_name'] ?></td>
                       <td><?php echo $row['email'] ?></td>
                       <td><?php echo $row['course'] ?></td>
-                      <td>
-                        <!-- Edit Student Button -->
-                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editStudentModal" onclick="editStudent('<?php echo $row['student_id']; ?>', '<?php echo $row['full_name']; ?>', '<?php echo $row['email']; ?>', '<?php echo $row['course']; ?>')">Edit</button>
-                        <!-- Delete Student Button -->
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteStudentModal" onclick="deleteStudent('<?php echo $row['student_id']; ?>')">Delete</button>
-                      </td>
                     </tr>
                     <?php
                   }
@@ -198,20 +189,6 @@ include('sidebar.php');
 <?php 
 include("../includes/script.php");
 ?>
-
-<script>
-function editStudent(student_id, full_name, email, course) {
-  document.getElementById("edit_student_id").value = student_id;
-  document.getElementById("edit_name").value = full_name;
-  document.getElementById("edit_email").value = email;
-  document.getElementById("edit_course").value = course;
-}
-
-function deleteStudent(student_id) {
-  document.getElementById("delete_student_id").value = student_id;
-}
-</script>
-
 <?php 
 include("../includes/footer.php");
 ?>

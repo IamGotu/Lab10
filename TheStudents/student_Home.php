@@ -59,7 +59,7 @@ include('sidebar.php');
             <div class="small-box bg-success">
               <div class="inner">
                 <h3><sup style="font-size: 20px"></sup></h3>
-                <p>Students</p>
+                <p>Enrolled Students</p>
               </div>
               <div class="icon">
                 <i class="fas fa-user-graduate"></i>
@@ -73,12 +73,12 @@ include('sidebar.php');
             <div class="small-box bg-warning">
               <div class="inner">
                 <h3></h3>
-                <p>Enroll Subjects</p>
+                <p>Enrolled Subjects</p>
               </div>
               <div class="icon">
                 <i class="fas fa-clipboard-check"></i>
               </div>
-              <a href="../TheStudents/enroll_Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheStudents/enrolled_Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

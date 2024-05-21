@@ -45,7 +45,7 @@ if (!isset($_SESSION['auth'])) {
                     <a href="../TheStudents/instructors.php" class="nav-link">
                         <i class="nav-icon far fa-user"></i>
                         <p>
-                            Teachers
+                            Instructors
                         </p>
                     </a>
                 </li>
@@ -53,15 +53,15 @@ if (!isset($_SESSION['auth'])) {
                     <a href="../TheStudents/Students.php" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
-                            Student
+                            Enrolled Students
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheStudents/enroll_Subjects.php" class="nav-link">
+                    <a href="../TheStudents/enrolled_Subjects.php" class="nav-link">
                         <i class="nav-icon fa fa-check-circle"></i>
                         <p>
-                            Enroll Subject
+                            Enrolled Subjects
                         </p>
                     </a>
                 </li>
