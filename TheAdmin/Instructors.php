@@ -106,8 +106,8 @@ include('sidebar.php');
           <input type="password" id="edit_password" name="edit_password" class="form-control" placeholder="Password" required>
         </div>
         <div class="form-group">
-          <label for="confirm_password">Confirm Password</label>
-          <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+          <label for="edit_confirm_password">Confirm Password</label>
+          <input type="password" id="edit_confirm_password" name="edit_confirm_password" class="form-control" placeholder="Confirm Password" required>
           <span id="passwordError" style="color: red;"></span>
         </div>
       </div>
@@ -209,7 +209,7 @@ include('sidebar.php');
                       <td><?php echo $row['gender'] ?></td>
                       <td>
                         <!-- Edit Teacher Button -->
-                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editTeacherModal" onclick="editTeacher('<?php echo $row['teacher_id']; ?>', '<?php echo $row['full_name']; ?>', '<?php echo $row['email']; ?>', '<?php echo $row['address']; ?>', '<?php echo $row['age']; ?>', '<?php echo $row['gender']; ?>')">Edit</button>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editTeacherModal" onclick="editTeacher('<?php echo $row['teacher_id']; ?>', '<?php echo $row['full_name']; ?>', '<?php echo $row['email']; ?>', '<?php echo $row['address']; ?>', '<?php echo $row['age']; ?>', '<?php echo $row['gender']; ?>', '<?php echo $row['password']; ?>')">Edit</button>
                         <!-- Delete Teacher Button -->
                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteTeacherModal" onclick="deleteTeacher('<?php echo $row['teacher_id']; ?>')">Delete</button>
                       </td>
@@ -232,13 +232,14 @@ include('sidebar.php');
 </div>
 
 <script>
-function editTeacher(teacher_id, full_name, email, address, age, gender) {
+function editTeacher(teacher_id, full_name, email, address, age, gender, password) {
   document.getElementById("edit_teacher_id").value = teacher_id;
   document.getElementById("edit_full_name").value = full_name;
   document.getElementById("edit_email").value = email;
   document.getElementById("edit_address").value = address;
   document.getElementById("edit_age").value = age;
   document.getElementById("edit_gender").value = gender;
+  document.getElementById("edit_password").value = password;
 }
 
 function deleteTeacher(teacher_id) {
