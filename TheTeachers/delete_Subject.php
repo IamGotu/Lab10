@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteSubjectbtn'])) {
     $student_id = $_POST['student_id'];
 
     // Perform the deletion of the subject
-    $delete_query = "UPDATE student_regis SET subjects = NULL WHERE student_id = ?";
+    $delete_query = "UPDATE student_list SET subjects = NULL WHERE student_id = ?";
     $stmt = mysqli_prepare($conn, $delete_query);
     mysqli_stmt_bind_param($stmt, "i", $student_id);
 

@@ -2,8 +2,8 @@
 session_start();
 include('../database/db_conn.php');
 include('../includes/header.php');
-include('../includes/topbar.php');
-include('authentication.php');
+include('topbar.php');
+include('../authentication.php');
 
 
 // Check if student_id is set in the URL
@@ -24,7 +24,7 @@ if (isset($_GET['student_id'])) {
     }
 } else {
     // Redirect if student_id is not set
-    header('Location: ../TheTeachers/enroll_Subjects.php');
+    header('Location: ../TheAdmin/enroll_Subjects.php');
     exit();
 }
 
@@ -46,8 +46,7 @@ $subjects = array(
 );
 
 // Include sidebar and footer after processing the form
-include("includes/sidebar.php");
-include("includes/footer.php");
+include("sidebar.php");
 ?>
 
 <!-- HTML form to add subjects -->
@@ -96,5 +95,6 @@ include("includes/footer.php");
 </div>
 
 <?php
-include("includes/script.php");
+include("../includes/script.php");
+include("../includes/footer.php");
 ?>

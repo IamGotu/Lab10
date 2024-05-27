@@ -94,7 +94,7 @@ include('sidebar.php');
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <a href="../TheTeachers/teachersbject.php?student_id=<?php echo $row['student_id'] ?>" class="btn btn-info btn-sm">Add</a>
+                                                        <a href="../TheTeachers/add_Subject.php?student_id=<?php echo $row['student_id'] ?>" class="btn btn-info btn-sm">Add</a>
                                                     </td>
                                                     <td>
                                                     
