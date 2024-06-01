@@ -65,6 +65,15 @@ if (!isset($_SESSION['auth'])) {
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="../TheTeachers/Assessments.php" class="nav-link">
+                        <i class="nav-icon fa fa-tasks"></i>
+                        <p>
+                            Assessments
+                        </p>
+                    </a>
+                </li>
+
 
             </ul>
         </nav>
