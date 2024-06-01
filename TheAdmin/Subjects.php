@@ -194,5 +194,5 @@ include("../includes/script.php");
 </script>
 
 <?php 
-include("../includes/footer.php");
+include("footer.php");
 ?>

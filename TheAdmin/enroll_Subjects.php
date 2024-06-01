@@ -171,4 +171,4 @@ include('sidebar.php');
 </div>
 
 <?php include("../includes/script.php"); ?>
-<?php include("../includes/footer.php"); ?>
+<?php include("footer.php"); ?>

@@ -263,5 +263,5 @@ function deleteStudent(student_id) {
 </script>
 
 <?php 
-include("../includes/footer.php");
+include("footer.php");
 ?>

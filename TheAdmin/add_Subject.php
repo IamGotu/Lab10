@@ -96,5 +96,5 @@ include("sidebar.php");
 
 <?php
 include("../includes/script.php");
-include("../includes/footer.php");
+include("footer.php");
 ?>
