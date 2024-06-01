@@ -58,14 +58,6 @@ if (!isset($_SESSION['auth'])) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheTeachers/enroll_Subjects.php" class="nav-link">
-                        <i class="nav-icon fa fa-check-circle"></i>
-                        <p>
-                            Enroll Subject
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="../TheTeachers/Subjects.php" class="nav-link">
                         <i class="nav-icon fa fa-book"></i>
                         <p>
