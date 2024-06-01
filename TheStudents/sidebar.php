@@ -3,7 +3,7 @@
 
 // Check if the user is not logged in and redirect to loginform.php
 if (!isset($_SESSION['auth'])) {
-    header("Location: loginform.php");
+    header("Location: ../loginform.php");
     exit();
 }
 ?>
