@@ -94,8 +94,5 @@
         <a href="../TheStudents/student_Home.php" class="btn">Decline (Back to home)</a>
     </div>
 </div>
-
-<!-- Your footer section or include footer.php here -->
-
 </body>
 </html>

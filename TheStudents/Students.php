@@ -190,5 +190,5 @@ include('sidebar.php');
 include("../includes/script.php");
 ?>
 <?php 
-include("../includes/footer.php");
+include("footer.php");
 ?>
