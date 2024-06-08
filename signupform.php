@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,14 +68,15 @@ session_start();
                     </div>
                     <div class="card-body">
                         <?php
+                            session_start();
                             include('includes/message.php');
                         ?>
                         <!-- Your sign-up form goes here -->
                         <form action="signupcode.php" method="POST" id="signupForm">
 
                             <div class="form-group">
-                                <label for="cars">Choose a role:</label>
-                                        <select id="cars">
+                                <label for="role">Choose A Role:</label>
+                                        <select name="role" id="role">
                                             <option value="student">STUDENT</option>
                                             <option value="instructor">INSTRUCTOR</option>
                                         </select>
@@ -93,8 +90,8 @@ session_start();
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">Password</label>
-                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                                        <label for="password">Password</label>
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{5,}" title="Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 5 characters long." required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -109,9 +106,18 @@ session_start();
                             <input type="hidden" name="user_id" class="form-control" required>
                             
                             <div class="form-group">
-                                <label for="">Full Name</label>
-                                <input type="text" name="full_name" class="form-control" placeholder="Full Name" required>
+                                <label for="full_name">Full Name</label>
+                                <input type="text" name="full_name" class="form-control" placeholder="Full Name" title="Format: First Name Middle Name (if applicable) Last Name" required>
+                                <small>Format: First Name Middle Name (if applicable) Last Name</small>
                             </div>
+
+                            <div class="form-group">
+                                <input type="hidden" name="user_id" class="form-control"> 
+                                <input type="hidden" name="Status" class="form-control">
+                                <input type="hidden" name="Active" class="form-control">
+                                <input type="hidden" name="profile_picture" class="form-control-file" >
+                            </div>
+
 
                             <div class="form-group">
                                 <label for="">Birthdate</label>
@@ -119,8 +125,9 @@ session_start();
                             </div>
 
                             <div class="form-group">
-                                <label for="">Phone Number</label>
-                                <input type="text" name="phone_number" class="form-control" placeholder="Phone Number" required>
+                                <label for="phone_number">Phone Number</label>
+                                <input type="tel" name="phone_number" class="form-control" placeholder="+63XXXXXXXXXX" pattern="^\+\d{1,3}\d{4,14}$" required>
+                                <small>Format: +CountryCodePhoneNumber (e.g., +639171234567)</small>
                             </div>
 
                             <div class="form-group">
@@ -129,9 +136,13 @@ session_start();
                             </div>
 
                             <div class="form-group">
-                                <input type="hidden" name="profile_picture" class="form-control-file" >
-                                <input type="hidden" name="Status" class="form-control">
-                                <input type="hidden" name="Active" class="form-control">
+                                <label for="gender">Gender:</label>
+                                        <select name="gender" id="gender">
+                                            <option value="male">MALE</option>
+                                            <option value="female">FEMALE</option>
+                                            <option value="undecided">PREFER NOT TO SAY</option>
+                                            <option value="potato_chips">POTATO CHIPS</option>
+                                        </select>
                             </div>
 
                             <hr>
@@ -153,6 +164,4 @@ session_start();
 </div>
 </body>
 </html>
-
-
 <?php include('includes/script.php'); ?>

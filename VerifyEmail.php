@@ -13,7 +13,8 @@
                 <h2 class="mb-4">Email Verification</h2>
                 
                 <?php
-                    include('message.php');
+                    session_start();
+                    include('includes/message.php');
                 ?>
 
                 <div class="form-group">
@@ -30,10 +31,11 @@
                 </div>
             </form>
             <div class="text-center">
-                <a href="signup.php" class="mr-2">Create Account</a>
+                <a href="signupform.php" class="mr-2">Create Account</a>
                 <a href="Terms&Condition.php" class="text-align"> Term of Service</a>
-                <a href="Loginform.php" class="mr-2">Login Account</a>
+                <a href="loginform.php" class="mr-2">Login Account</a>
             </div>
+
         </div>
     </body>
 </html>
