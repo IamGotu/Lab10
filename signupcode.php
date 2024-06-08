@@ -55,20 +55,6 @@ if (isset($_POST['signup_btn'])) {
         exit(0);
     }
     
-    // Validate phone number format
-    if (!preg_match("/^\+\d{1,3}\d{4,14}$/", $phone_number)) {
-        $_SESSION['status'] = "Invalid phone number format.";
-        header("Location: signupform.php?error=Invalid phone number format");
-        exit();
-    }
-
-    // Validate password format
-    if (!preg_match("/(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{5,}/", $password)) {
-        $_SESSION['status'] = "Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 5 characters long.";
-        header("Location: signupform.php?error=Invalid password format");
-        exit();
-    }
-    
     // Calculate age
     $birthday = new DateTime($birthdate);
     $currentDate = new DateTime();
