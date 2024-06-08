@@ -94,8 +94,8 @@ if(isset($_SESSION['auth'])) {
                         <form action="logincode.php" method="POST">
 
                             <div class="form-group">
-                                <label for="cars">Choose a role:</label>
-                                        <select id="cars">
+                                <label for="role">Choose A Role:</label>
+                                        <select id="role">
                                             <option value="student">STUDENT</option>
                                             <option value="instructor">INSTRUCTOR</option>
                                             <option value="admin">ADMIN</option>
