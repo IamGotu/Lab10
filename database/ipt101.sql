@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2024 at 01:11 PM
+-- Generation Time: Jun 08, 2024 at 05:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,7 @@ USE `ipt101`;
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
   `admin_id` int(11) DEFAULT NULL,
+  `profile_picture` text NOT NULL,
   `full_name` varchar(100) NOT NULL,
   `birthdate` date NOT NULL,
   `gender` varchar(100) NOT NULL,
@@ -39,6 +40,13 @@ CREATE TABLE `admin` (
   `phone_number` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `admin_id`, `profile_picture`, `full_name`, `birthdate`, `gender`, `email`, `phone_number`, `address`) VALUES
+(0, 1, 'user.png', 'Admin', '2000-07-06', 'Potato Chips', 'admin@gmail.com', '09123456789', 'GSC');
 
 -- --------------------------------------------------------
 
@@ -49,6 +57,7 @@ CREATE TABLE `admin` (
 CREATE TABLE `instructors` (
   `id` int(11) NOT NULL,
   `instructor_id` int(11) DEFAULT NULL,
+  `profile_picture` text NOT NULL,
   `full_name` varchar(100) NOT NULL,
   `birthdate` date NOT NULL,
   `gender` varchar(100) NOT NULL,
@@ -66,6 +75,7 @@ CREATE TABLE `instructors` (
 CREATE TABLE `students` (
   `id` int(11) NOT NULL,
   `student_id` int(11) DEFAULT NULL,
+  `profile_picture` text NOT NULL,
   `full_name` varchar(100) NOT NULL,
   `birthdate` date NOT NULL,
   `gender` varchar(100) NOT NULL,
@@ -102,12 +112,19 @@ CREATE TABLE `user` (
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `role` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL,
   `active` varchar(100) NOT NULL,
   `verify_token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `role`, `email`, `password`, `status`, `active`, `verify_token`) VALUES
+(1, 'admin', 'admin@gmail.com', 'admin', 'Verified', 'Offline', '4ry3');
 
 -- --------------------------------------------------------
 
@@ -146,13 +163,15 @@ INSERT INTO `user_profile` (`user_id`, `full_name`, `birthdate`, `email`, `phone
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `admin_id` (`admin_id`);
+  ADD KEY `admin_id` (`admin_id`),
+  ADD KEY `admin_email` (`email`);
 
 --
 -- Indexes for table `instructors`
 --
 ALTER TABLE `instructors`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `instructor_id` (`instructor_id`);
 
 --
@@ -160,13 +179,15 @@ ALTER TABLE `instructors`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `UNIQUE` (`email`);
 
 --
 -- Constraints for dumped tables
@@ -176,19 +197,21 @@ ALTER TABLE `users`
 -- Constraints for table `admin`
 --
 ALTER TABLE `admin`
+  ADD CONSTRAINT `admin_email` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `instructors`
 --
 ALTER TABLE `instructors`
+  ADD CONSTRAINT `instructor_email` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `instructors_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `students`
 --
 ALTER TABLE `students`
-  ADD CONSTRAINT `id` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_email` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
