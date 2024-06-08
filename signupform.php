@@ -1,6 +1,4 @@
 <?php
-session_start();
-include('config/db_conn.php');
 include('includes/header.php');
 ?>
 
@@ -19,7 +17,7 @@ include('includes/header.php');
                         <form action="signupcode.php" method="POST" id="signupForm">
 
                         <?php
-                        include('message.php');
+                        include('includes/message.php');
                         ?>
     
                             <div class="form-group">
@@ -84,4 +82,3 @@ include('includes/header.php');
 </div>
 
 <?php include('includes/script.php'); ?>
-<?php include('includes/footer.php'); ?>
