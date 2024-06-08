@@ -92,17 +92,30 @@ if(isset($_SESSION['auth'])) {
                             include('includes/message.php');
                         ?>
                         <form action="logincode.php" method="POST">
+
+                            <div class="form-group">
+                                <label for="cars">Choose a role:</label>
+                                        <select id="cars">
+                                            <option value="student">STUDENT</option>
+                                            <option value="instructor">INSTRUCTOR</option>
+                                            <option value="admin">ADMIN</option>
+                                        </select>
+                            </div>
+
                             <div class="form-group">
                                 <label for="student_id">Email </label>
                                 <input type="text" name="student_id" class="form-control" required>
                             </div>
+
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="password" name="password" class="form-control" required>
                             </div>
+
                             <div class="form-group">
                                 <button type="submit" name="login_btn" class="btn btn-primary btn-block">Login</button>
                             </div> 
+
                         </form>
                             <div class="text-center">
                                 <p>Don't have an account? <a href="signupform.php" class="btn-sm">Sign Up</a></p>

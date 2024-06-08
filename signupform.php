@@ -77,12 +77,15 @@ session_start();
                         <!-- Your sign-up form goes here -->
                         <form action="signupcode.php" method="POST" id="signupForm">
 
-                            <label for="cars">Choose a role:</label>
-                                <select id="cars">
-                                    <option value="student">Student</option>
-                                    <option value="instructor">instructor</option>
-                                </select>
-                                <div class="form-group">
+                            <div class="form-group">
+                                <label for="cars">Choose a role:</label>
+                                        <select id="cars">
+                                            <option value="student">STUDENT</option>
+                                            <option value="instructor">INSTRUCTOR</option>
+                                        </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="">Email</label>
                                 <input type="text" name="email" class="form-control" placeholder="Email" required>
                             </div>
