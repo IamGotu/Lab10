@@ -3,8 +3,17 @@ session_start();
 include('database/db_conn.php');
 
 if(isset($_POST['login_btn'])) {
-    $email = $_POST['student_id'];
-    $password = $_POST['password'];
+    function validate($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    $role = validate($_POST['role']);;
+    $email = validate($_POST['student_id']);
+    $password = validate($_POST['password']);
 
     // Define an array of tables and their corresponding redirect URLs
     $tables = [
