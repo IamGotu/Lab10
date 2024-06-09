@@ -4,11 +4,12 @@ session_start();
 // Check if user is not logged in
 if (!isset($_SESSION['auth'])) {
     $_SESSION['auth_status'] = "You need to be logged in to access this page";
-    header('Location: loginform.php');
+    header('Location: ../loginform.php');
     exit();
 }
 
 // Include necessary files
+include('../authentication.php');
 include('../database/db_conn.php');
 include('../includes/header.php');
 include('topbar.php');

@@ -2,7 +2,7 @@
 
 function checkAuth() {
     if (!isset($_SESSION['auth'])) {
-        header("Location: loginform.php");
+        header("Location: ../loginform.php");
         exit();
     }
 }
