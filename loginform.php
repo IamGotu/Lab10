@@ -1,24 +1,3 @@
-<?php
-session_start();
-
-if(isset($_SESSION['auth'])) {
-    // Redirecting to the appropriate page based on user role
-    if($_SESSION['auth'] == 'admin') {
-        $_SESSION['auth_status'] = "You are already logged in";
-        header('Location: ../TheAdmin/admin_Home.php');
-        exit();
-    } elseif($_SESSION['auth'] == 'student') {
-        $_SESSION['auth_status'] = "You are already logged in";
-        header('Location: ../TheStudents/student_Home.php');
-        exit();
-    } elseif($_SESSION['auth'] == 'teacher') {
-        $_SESSION['auth_status'] = "You are already logged in";
-        header('Location: ../TheTeachers/teachers_Home.php');
-        exit();
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,13 +68,14 @@ if(isset($_SESSION['auth'])) {
                     </div>
                     <div class="card-body">
                         <?php
+                            session_start();
                             include('includes/message.php');
                         ?>
                         <form action="logincode.php" method="POST">
 
                             <div class="form-group">
                                 <label for="role">Choose A Role:</label>
-                                        <select id="role">
+                                        <select name="role" id="role">
                                             <option value="student">STUDENT</option>
                                             <option value="instructor">INSTRUCTOR</option>
                                             <option value="admin">ADMIN</option>

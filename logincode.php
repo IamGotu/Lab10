@@ -2,63 +2,64 @@
 session_start();
 include('database/db_conn.php');
 
-if(isset($_POST['login_btn'])) {
-    function validate($data)
-    {
+if (isset($_POST['login_btn'])) {
+    function validate($data) {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
     }
 
-    $role = validate($_POST['role']);;
-    $email = validate($_POST['student_id']);
+    $role = validate($_POST['role']);
+    $email = validate($_POST['email']);
     $password = validate($_POST['password']);
 
-    // Define an array of tables and their corresponding redirect URLs
-    $tables = [
-        'admin' => '../TheAdmin/admin_Home.php',
-        'teachers' => '../TheTeachers/teachers_Home.php',
-        'student_list' => '../TheStudents/student_Home.php'
-    ];
+    // Check if user exists in the database and verify the credentials
+    $query = "SELECT * FROM users WHERE email = ? AND role = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ss", $email, $role);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Loop through each table to check for valid credentials
-    foreach ($tables as $table => $redirect_url) {
-        // Prepare SQL statement
-        $query = "SELECT * FROM $table WHERE email = ? AND password = ?";
-        $stmt = mysqli_prepare($conn, $query);
+    if ($result->num_rows == 1) {
+        $user = $result->fetch_assoc();
 
-        // Bind parameters
-        mysqli_stmt_bind_param($stmt, "ss", $email, $password);
+        // Assuming passwords are stored hashed, verify the password
+        if (password_verify($password, $user['password'])) {
+            // Authentication successful
+            $_SESSION['role'] = $role;
+            $_SESSION['email'] = $email;
 
-        // Execute query
-        mysqli_stmt_execute($stmt);
-
-        // Get result
-        $result = mysqli_stmt_get_result($stmt);
-
-        // Check if user exists
-        if (mysqli_num_rows($result) == 1) {
-            // Fetch user data
-            $row = mysqli_fetch_assoc($result);
-
-            // Store user data in session
-            $_SESSION['auth'] = true;
-            $_SESSION['auth_user'] = $row;
-
-            // Redirect to the corresponding user profile page
-            header("Location: $redirect_url");
+            if ($role == 'admin') {
+                header('Location: ../TheAdmin/admin_Home.php');
+                exit();
+            } elseif ($role == 'teachers') {
+                header('Location: ../TheTeachers/teachers_Home.php');
+                exit();
+            } elseif ($role == 'student_list') {
+                header('Location: ../TheStudents/student_Home.php');
+                exit();
+            } else {
+                // Handle unknown role
+                $_SESSION['auth_status'] = "Unknown role.";
+                header('Location: ../loginform.php?error=Unknown role.');
+                exit();
+            }
+        } else {
+            // Invalid password
+            $_SESSION['auth_status'] = "Invalid email or password";
+            header('Location: ../loginform.php?error=Invalid email or password');
             exit();
         }
+    } else {
+        // Invalid email or role
+        $_SESSION['auth_status'] = "Invalid email or role";
+        header('Location: loginform.php?error=Invalid email or role');
+        exit();
     }
-
-    // Invalid credentials, redirect to login page with error message
-    $_SESSION['auth_status'] = "Invalid email or password";
-    header('Location: loginform.php');
-    exit();
 } else {
     // If login button not pressed, redirect to login page
-    header('Location: loginform.php');
+    header('Location: ../loginform.php?error=error.');
     exit();
 }
 ?>
