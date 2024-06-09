@@ -32,7 +32,7 @@ if(isset($_POST['addStudent'])) {
     mysqli_stmt_close($stmt);
 
     if($count > 0) {
-        $_SESSION['status'] = "Email already exists in the database";
+        $_SESSION['auth_status'] = "Email already exists in the database";
         header('Location: ../TheAdmin/Students.php');
         exit(0);
     }
@@ -48,11 +48,11 @@ if(isset($_POST['addStudent'])) {
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['status'] = "Student added successfully";
+        $_SESSION['auth_status'] = "Student added successfully";
         header('Location: ../TheAdmin/Students.php');
         exit(0);
     } else {
-        $_SESSION['status'] = "Error adding student";
+        $_SESSION['auth_status'] = "Error adding student";
         header('Location: ../TheAdmin/Students.php');
         exit(0);
     }
@@ -71,17 +71,41 @@ if(isset($_POST['addStudent'])) {
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['status'] = "Student deleted successfully";
+        $_SESSION['auth_status'] = "Student deleted successfully";
         header('Location: ../TheAdmin/Students.php');
         exit(0);
     } else {
-        $_SESSION['status'] = "Error deleting student";
+        $_SESSION['auth_status'] = "Error deleting student";
         header('Location: ../TheAdmin/Students.php');
         exit(0);
     }
-} else {
+} elseif ( isset($_POST['updateStudent'])) {
+        // Sanitize user input
+        $student_id = mysqli_real_escape_string($conn, $_POST['edit_student_id']);
+        $full_name = mysqli_real_escape_string($conn, $_POST['edit_full_name']);
+        $email = mysqli_real_escape_string($conn, $_POST['edit_email']);
+        $address = mysqli_real_escape_string($conn, $_POST['edit_address']);
+        $age = mysqli_real_escape_string($conn, $_POST['edit_age']);
+        $gender = mysqli_real_escape_string($conn, $_POST['edit_gender']);
+        $course = mysqli_real_escape_string($conn, $_POST['edit_course']);
+        $password = mysqli_real_escape_string($conn, $_POST['edit_password']);
+    
+        // Update student's information in the database
+        $update_query = "UPDATE student_list SET full_name='$full_name', email='$email', address='$address', age='$age', gender='$gender', course='$course', password='$password' WHERE student_id='$student_id'";
+        $update_result = mysqli_query($conn, $update_query);
+    
+        if ($update_result) {
+            $_SESSION['auth_status'] = "Student details updated successfully";
+            header('Location: ../TheAdmin/Students.php');
+            exit();
+        } else {
+            $_SESSION['auth_status'] = "Failed to update student details. Please try again.";
+            header('Location: ../TheAdmin/Students.php');
+            exit();
+        }
+    } else {
     // Display an error message if the form was not submitted
-    $_SESSION['status'] = "Student Action Failed";
+    $_SESSION['auth_status'] = "Student Action Failed";
     header("Location: ../TheAdmin/Students.php");
     exit(0);
 }
