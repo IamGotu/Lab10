@@ -8,8 +8,6 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
   exit();
 }
 
-$user_details = $_SESSION['user_details'];
-
 // Include necessary files
 include('../database/db_conn.php');
 include('../includes/header.php');
@@ -27,7 +25,7 @@ include('sidebar.php');
         <h1 class="modal-title fs-5" id="exampleModalLabel">Add Instructor</h1>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="add_delete_Instructor.php" method="post" onsubmit="return validateForm()">
+      <form action="Instructor_add_delete_update.php" method="post">
       <div class="modal-body">
 
         <div class="form-group">
@@ -41,8 +39,9 @@ include('sidebar.php');
         </div>
 
         <div class="form-group">
-          <label for="full_name">Full Name</label>
-          <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name" required>
+            <label for="full_name">Full Name</label>
+            <input type="text" name="full_name" class="form-control" placeholder="Full Name" title="Format: First Name Middle Name (if applicable) Last Name" required>
+            <small>Format: First Name Middle Name (if applicable) Last Name</small>
         </div>
 
         <div class="form-group">
@@ -53,22 +52,22 @@ include('sidebar.php');
         <div class="form-group">
           <label for="gender">Gender</label>
           <select id="gender" name="gender" class="form-control" required>
-            <option value="male">MALE</option>
-            <option value="female">FEMALE</option>
-            <option value="undecided">PREFER NOT TO SAY</option>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+            <option value="PREFER NOT TO SAY">PREFER NOT TO SAY</option>
           </select>
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Email" title="Please use proper format (e.g email@gmail.com)" required>
           <span id="emailError" style="color: red;"></span>
         </div>
 
         <div class="form-group">
             <label for="phone_number">Phone Number</label>
             <input type="tel" name="phone_number" class="form-control" placeholder="+63XXXXXXXXXX" pattern="^\+\d{1,3}\d{4,14}$" required>
-            <small>Format: +CountryCodePhoneNumber (e.g., +639171234567)</small>
+            <small>Format: +CountryCodePhoneNumber (e.g., +63XXXXXXXXXX)</small>
         </div>
 
         <div class="form-group">
@@ -94,42 +93,42 @@ include('sidebar.php');
         <h1 class="modal-title fs-5" id="exampleModalLabel">Update Instructor</h1>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="update_Instructor.php" method="post">
-      <div class="modal-body">
-        <input type="hidden" id="update_instructor_id" name="update_instructor_id" value="<?php echo $row['instructor_id'] ?>" class="form-control">
+      <form action="Instructor_add_delete_update.php" method="post">
+        <div class="modal-body">
+
+        <input type="hidden" id="update_instructor_id" name="update_instructor_id" class="form-control">
+
         <div class="form-group">
           <label for="update_full_name">Full Name</label>
-          <input type="text" id="update_full_name" name="update_full_name" class="form-control" value="<?php echo $row['full_name'] ?>" placeholder="Full Name" required>
+          <input type="text" id="update_full_name" name="update_full_name" class="form-control" placeholder="Full Name" required>
         </div>
+
         <div class="form-group">
-          <label for="update_email">Email</label>
-          <input type="email" id="update_email" name="update_email" class="form-control" placeholder="Email" required>
+          <label for="update_birthdate">Birthdate</label>
+          <input type="date" id="update_birthdate" name="update_birthdate" class="form-control" placeholder="Birthdate" required>
         </div>
+        
+        <div class="form-group">
+          <label for="update_gender">Gender</label>
+          <select id="update_gender" name="update_gender" class="form-control" required>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+            <option value="PREFER NOT TO SAY">PREFER NOT TO SAY</option>
+          </select>
+        </div>
+
+        
+        <div class="form-group">
+          <label for="update_phone_number">Phone Number</label>
+          <input type="tel" id="update_phone_number" name="update_phone_number" class="form-control" placeholder="+63XXXXXXXXXX" pattern="^\+\d{1,3}\d{4,14}$" required>
+          <small>Format: +CountryCodePhoneNumber (e.g., +63XXXXXXXXXXX)</small>
+        </div>
+            
         <div class="form-group">
           <label for="update_address">Address</label>
           <input type="text" id="update_address" name="update_address" class="form-control" placeholder="Address" required>
         </div>
-        <div class="form-group">
-          <label for="update_age">Age</label>
-          <input type="number" id="update_age" name="update_age" class="form-control" placeholder="Age" required>
-        </div>
-        <div class="form-group">
-          <label for="update_gender">Gender</label>
-          <select id="update_gender" name="update_gender" class="form-control" required>
-            <option value="male">MALE</option>
-            <option value="female">FEMALE</option>
-            <option value="undecided">PREFER NOT TO SAY</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="update_password">Password</label>
-          <input type="password" id="update_password" name="update_password" class="form-control" placeholder="Password" required>
-        </div>
-        <div class="form-group">
-          <label for="update_confirm_password">Confirm Password</label>
-          <input type="password" id="update_confirm_password" name="update_confirm_password" class="form-control" placeholder="Confirm Password" required>
-          <span id="passwordError" style="color: red;"></span>
-        </div>
+            
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -150,7 +149,7 @@ include('sidebar.php');
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="add_delete_Instructor.php" method="post">
+      <form action="Instructor_add_delete_update.php" method="post">
         <div class="modal-body">
           <input type="hidden" id="delete_instructor_id" name="delete_instructor_id">
           <p>Are you sure you want to delete this instructor?</p>
@@ -169,7 +168,7 @@ include('sidebar.php');
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Dashboard</h1>
+        <h1 class="m-0">Instructors</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -181,6 +180,10 @@ include('sidebar.php');
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
+ 
+<?php
+  include ('../includes/message.php');
+?>
 
 <!-- Main content -->
 <section class="content">
@@ -233,7 +236,7 @@ include('sidebar.php');
                       <td><?php echo $row['address'] ?></td>
                       <td>
                         <!-- Update Instructor Button -->
-                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#updateInstructorModal" onclick="updateInstructor('<?php echo $row['instructor_id']; ?>', '<?php echo $row['full_name']; ?>', '<?php echo $row['birthdate']; ?>', '<?php echo $row['age']; ?>', '<?php echo $row['gender']; ?>', '<?php echo $row['email']; ?>', '<?php echo $row['phone_number']; ?>', '<?php echo $row['address']; ?>')">Update</button>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#updateInstructorModal" onclick="updateInstructor('<?php echo $row['instructor_id']; ?>', '<?php echo $row['full_name']; ?>', '<?php echo $row['birthdate']; ?>', '<?php echo $row['gender']; ?>', '<?php echo $row['phone_number']; ?>', '<?php echo $row['address']; ?>')">Update</button>
                         <!-- Delete Instructor Button -->
                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteInstructorModal" onclick="deleteInstructor('<?php echo $row['instructor_id']; ?>')">Delete</button>
                       </td>
@@ -256,14 +259,13 @@ include('sidebar.php');
 </div>
 
 <script>
-function updateInstructor(instructor_id, full_name, email, address, age, gender, password) {
+function updateInstructor(instructor_id, full_name, birthdate, gender, phone_number, address) {
   document.getElementById("update_instructor_id").value = instructor_id;
   document.getElementById("update_full_name").value = full_name;
-  document.getElementById("update_email").value = email;
-  document.getElementById("update_address").value = address;
-  document.getElementById("update_age").value = age;
+  document.getElementById("update_birthdate").value = birthdate;
   document.getElementById("update_gender").value = gender;
-  document.getElementById("update_password").value = password;
+  document.getElementById("update_phone_number").value = phone_number;
+  document.getElementById("update_address").value = address;
 }
 
 function deleteInstructor(instructor_id) {
@@ -271,12 +273,10 @@ function deleteInstructor(instructor_id) {
 }
 </script>
 
+
 <?php 
 include("../includes/script.php");
 ?>
-
-
-
 <?php 
 include("footer.php");
 ?>

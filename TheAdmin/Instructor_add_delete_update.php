@@ -4,8 +4,8 @@ session_start();
 // Include file for database connection
 include('../database/db_conn.php');
 
-// Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) {
+// Adding Instructor
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { // Check if the request method is POST
     // Function to validate input data
     function validate($data) {
         return htmlspecialchars(stripslashes(trim($data)));
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) {
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['status'] = "Invalid email format.";
-        header("Location: signupform.php?error=Invalid email format");
+        header("Location: Instructors.php?error=Invalid email format");
         exit();
     }
 
@@ -40,28 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) {
 
     if ($result_check_email->num_rows > 0) {
         $_SESSION['status'] = "Email already exists.";
-        header("Location: signupform.php?error=Email already exists");
-        exit();
-    }
-
-    // Check if new password and confirm password match
-    if ($password !== $confirm_password) {
-        $_SESSION['status'] = "Passwords do not match. Please try again.";
-        header("Location: signupform.php?error=Passwords do not match. Please try again.");
+        header("Location: Instructors.php?error=Email already exists");
         exit();
     }
     
     // Validate phone number format
     if (!preg_match("/^\+\d{1,3}\d{4,14}$/", $phone_number)) {
         $_SESSION['status'] = "Invalid phone number format.";
-        header("Location: signupform.php?error=Invalid phone number format");
-        exit();
-    }
-
-    // Validate password format
-    if (!preg_match("/(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{5,}/", $password)) {
-        $_SESSION['status'] = "Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 5 characters long.";
-        header("Location: signupform.php?error=Invalid password format");
+        header("Location: Instructors.php?error=Invalid phone number format");
         exit();
     }
 
@@ -73,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) {
     // Check if age is less than 14
     if ($age < 14) {
         $_SESSION['status'] = "You must be at least 14 years old to register.";
-        header("Location: signupform.php?error=You must be at least 14 years old to register.");
+        header("Location: Instructors.php?error=You must be at least 14 years old to register.");
         exit();
     }
 
@@ -100,14 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) {
             exit();
         } else {
             $_SESSION['status'] = "Error adding instructor.";
-            header('Location: signupform.php?error=Error adding instructor');
+            header('Location: Instructors.php?error=Error adding instructor');
             exit();
         }
     } else {
         $_SESSION['status'] = "Error adding user.";
-        header('Location: signupform.php?error=Error adding user');
+        header('Location: Instructors.php?error=Error adding user');
         exit();
     }
+
+// Deleting Instructor
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteInstructor'])) {
     // Ensure field is initialized
     $user_id = $_POST['delete_user_id'];
@@ -131,29 +119,67 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) {
         header('Location: ../TheAdmin/Instructors.php');
         exit(0);
     }
+
+// updating Instructor
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateInstructor'])) {
-    // Sanitize user input
-    $instructor_id = mysqli_real_escape_string($conn, $_POST['edit_instructor_id']);
-    $full_name = mysqli_real_escape_string($conn, $_POST['edit_full_name']);
-    $email = mysqli_real_escape_string($conn, $_POST['edit_email']);
-    $address = mysqli_real_escape_string($conn, $_POST['edit_address']);
-    $age = mysqli_real_escape_string($conn, $_POST['edit_age']);
-    $gender = mysqli_real_escape_string($conn, $_POST['edit_gender']);
-    $password = mysqli_real_escape_string($conn, $_POST['edit_password']);
 
+    $instructor_id = mysqli_real_escape_string($conn, $_POST['update_instructor_id']);
+    $full_name = mysqli_real_escape_string($conn, $_POST['update_full_name']);
+    $birthdate = mysqli_real_escape_string($conn, trim($_POST['update_birthdate'])); // Ensure the birthdate is retrieved correctly
+    $gender = mysqli_real_escape_string($conn, $_POST['update_gender']);
+    $phone_number = mysqli_real_escape_string($conn, trim($_POST['update_phone_number'])); // Ensure the phone number is retrieved correctly
+    $address = mysqli_real_escape_string($conn, $_POST['update_address']);
+
+    /*
+    // Ensure fields are initialized
+    $instructor_id = validate($_POST['updating_instructor_id']);
+    $full_name = validate($_POST['updating_full_name']);
+    $birthdate = validate(trim($_POST['update_birthdate'])); // Retrieve and trim the birthdate from POST data
+    $gender = validate($_POST['updating_gender']);
+    $phone_number = validate(trim($_POST['update_phone_number']));  // Ensure the phone number is trimmed
+    $address = validate($_POST['updating_address']);
+    */
+
+    // Validate phone number format
+    if (!preg_match("/^\+\d{1,3}\d{4,14}$/", $phone_number)) {
+        $_SESSION['auth_status'] = "Invalid phone number format.";
+        header("Location: Instructors.php?error=Invalid phone number format");
+        exit();
+    }    
+
+    // Calculate age
+    $birthday = new DateTime($birthdate);
+    $currentDate = new DateTime();
+    $age = $currentDate->diff($birthday)->y;
+
+    // Check if age is less than 14
+    if ($age < 14) {
+        $_SESSION['auth_status'] = "The user must be at least 14 years old.";
+        header("Location: Instructors.php?error=You must be at least 14 years old.");
+        exit();
+    }
+
+    // Convert DateTime object to string for SQL
+    $birthdateStr = $birthday->format('Y-m-d');
+    
     // Update instructor data in the database
-    $update_query = "UPDATE instructors SET full_name='$full_name', email='$email', address='$address', age='$age', gender='$gender', password='$password' WHERE instructor_id='$instructor_id'";
-    $update_result = mysqli_query($conn, $update_query);
+    $update_sql = "UPDATE instructors SET full_name = ?, birthdate = ?, age = ?, gender = ?, phone_number = ?, address = ? WHERE instructor_id = ?";
+    $stmt = $conn->prepare($update_sql);
+    $stmt->bind_param("ssisssi", $full_name, $birthdateStr, $age, $gender, $phone_number, $address, $instructor_id);
 
-    if ($update_result) {
-        $_SESSION['status'] = "Instructor details updated successfully";
+    if ($stmt->execute()) {
+    $_SESSION['status'] = "Instructor details updated successfully";
         header('Location: ../TheAdmin/Instructors.php');
         exit();
     } else {
         // Add error handling to display MySQL error
-        $_SESSION['status'] = "Failed to update instructor details. Error: " . mysqli_error($conn);
+        $_SESSION['auth_status'] = "Failed to update instructor details. Error: " . mysqli_error($conn);
         header('Location: ../TheAdmin/Instructors.php');
         exit();
     }
+} else {
+    $_SESSION['auth_status'] = "Failed to update instructor details. Error: " . mysqli_error($conn);
+    header('Location: ../TheAdmin/Instructors.php');
+    exit();
 }
 ?>
