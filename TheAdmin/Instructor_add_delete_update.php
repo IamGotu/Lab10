@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
 
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['status'] = "Invalid email format.";
+        $_SESSION['auth_status'] = "Invalid email format.";
         header("Location: Instructors.php?error=Invalid email format");
         exit();
     }
@@ -39,14 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
     $result_check_email = $stmt_check_email->get_result();
 
     if ($result_check_email->num_rows > 0) {
-        $_SESSION['status'] = "Email already exists.";
+        $_SESSION['auth_status'] = "Email already exists.";
         header("Location: Instructors.php?error=Email already exists");
         exit();
     }
     
     // Validate phone number format
     if (!preg_match("/^\+\d{1,3}\d{4,14}$/", $phone_number)) {
-        $_SESSION['status'] = "Invalid phone number format.";
+        $_SESSION['auth_status'] = "Invalid phone number format.";
         header("Location: Instructors.php?error=Invalid phone number format");
         exit();
     }
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
 
     // Check if age is less than 14
     if ($age < 14) {
-        $_SESSION['status'] = "You must be at least 14 years old to register.";
+        $_SESSION['auth_status'] = "You must be at least 14 years old to register.";
         header("Location: Instructors.php?error=You must be at least 14 years old to register.");
         exit();
     }
@@ -111,11 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['status'] = "Instructors deleted successfully";
+        $_SESSION['auth_status'] = "Instructors deleted successfully";
         header('Location: ../TheAdmin/Instructors.php');
         exit(0);
     } else {
-        $_SESSION['status'] = "Error deleting instructor";
+        $_SESSION['auth_status'] = "Error deleting instructor";
         header('Location: ../TheAdmin/Instructors.php');
         exit(0);
     }
@@ -129,16 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
     $gender = mysqli_real_escape_string($conn, $_POST['update_gender']);
     $phone_number = mysqli_real_escape_string($conn, trim($_POST['update_phone_number'])); // Ensure the phone number is retrieved correctly
     $address = mysqli_real_escape_string($conn, $_POST['update_address']);
-
-    /*
-    // Ensure fields are initialized
-    $instructor_id = validate($_POST['updating_instructor_id']);
-    $full_name = validate($_POST['updating_full_name']);
-    $birthdate = validate(trim($_POST['update_birthdate'])); // Retrieve and trim the birthdate from POST data
-    $gender = validate($_POST['updating_gender']);
-    $phone_number = validate(trim($_POST['update_phone_number']));  // Ensure the phone number is trimmed
-    $address = validate($_POST['updating_address']);
-    */
 
     // Validate phone number format
     if (!preg_match("/^\+\d{1,3}\d{4,14}$/", $phone_number)) {
@@ -168,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
     $stmt->bind_param("ssisssi", $full_name, $birthdateStr, $age, $gender, $phone_number, $address, $instructor_id);
 
     if ($stmt->execute()) {
-    $_SESSION['status'] = "Instructor details updated successfully";
+    $_SESSION['auth_status'] = "Instructor details updated successfully";
         header('Location: ../TheAdmin/Instructors.php');
         exit();
     } else {
