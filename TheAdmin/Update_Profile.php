@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $file_extension = pathinfo($profile_picture, PATHINFO_EXTENSION);
     
             if (!in_array($file_extension, $allowed_extension)) {
-                $_SESSION['status'] = "You are allowed with only jpg, png, jpeg image";
+                $_SESSION['auth_status'] = "You are allowed with only jpg, png, jpeg image";
                 header('Location: User_Profile.php');
                 exit(0);
             }
@@ -33,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($stmt->execute()) {
                 move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'uploads/'.$profile_picture);
-                $_SESSION['status'] = "Profile Update Successfully";
+                $_SESSION['auth_status'] = "Profile Update Successfully";
                 header('Location: User_Profile.php');
                 exit(0);
             } else {
-                $_SESSION['status'] = "Profile Picture Updating Failed";
+                $_SESSION['auth_status'] = "Profile Picture Updating Failed";
                 header('Location: User_Profile.php');
                 exit(0);
             }
@@ -53,11 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("sssi", $full_name, $phone_number, $address, $user_id);
 
             if ($stmt->execute()) {
-                $_SESSION['status'] = "User Information Updated Successfully";
+                $_SESSION['auth_status'] = "User Information Updated Successfully";
                 header('Location: User_Profile.php');
                 exit(0);
             } else {
-                $_SESSION['status'] = "User Information Update Failed";
+                $_SESSION['auth_status'] = "User Information Update Failed";
                 header("Location: User_Profile.php");
                 exit(0);
             }
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $age = $currentDate->diff($birthday)->y;
 
             if ($age < 14) {
-                $_SESSION['status'] = "Only 14 years old or above are allowed.";
+                $_SESSION['auth_status'] = "Only 14 years old or above are allowed.";
                 header("Location: User_Profile.php?error=Only 14 years old or above are allowed.");
                 exit();
             } else {
@@ -80,11 +80,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->bind_param("si", $birthdateStr, $user_id);
 
                 if ($stmt->execute()) {
-                    $_SESSION['status'] = "Birthdate Update Successfully";
+                    $_SESSION['auth_status'] = "Birthdate Update Successfully";
                     header('Location: User_Profile.php');
                     exit(0);
                 } else {
-                    $_SESSION['status'] = "Birthdate Update Failed";
+                    $_SESSION['auth_status'] = "Birthdate Update Failed";
                     header("Location: User_Profile.php");
                     exit(0);
                 }
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Check if new password and confirm password match
             if ($new_password !== $confirm_password) {
-                $_SESSION['status'] = "New password and confirm password do not match";
+                $_SESSION['auth_status'] = "New password and confirm password do not match";
                 header('Location: User_Profile.php');
                 exit(0);
             }
@@ -109,23 +109,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("si", $new_password, $user_id);
 
             if ($stmt->execute()) {
-                $_SESSION['status'] = "Password Updated Successfully";
+                $_SESSION['auth_status'] = "Password Updated Successfully";
                 header('Location: User_Profile.php');
                 exit(0);
             } else {
-                $_SESSION['status'] = "Password Update Failed: " . $stmt->error;
+                $_SESSION['auth_status'] = "Password Update Failed: " . $stmt->error;
                 header("Location: User_Profile.php");
                 exit(0);
             }
             break;
 
         default:
-            $_SESSION['status'] = "No valid action specified";
+            $_SESSION['auth_status'] = "No valid action specified";
             header("Location: User_Profile.php");
             exit(0);
     }
 } else {
-    $_SESSION['status'] = "Invalid request method";
+    $_SESSION['auth_status'] = "Invalid request method";
     header("Location: User_Profile.php");
     exit(0);
 }
