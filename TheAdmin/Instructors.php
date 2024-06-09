@@ -151,7 +151,7 @@ include('sidebar.php');
       </div>
       <form action="Instructor_add_delete_update.php" method="post">
         <div class="modal-body">
-          <input type="hidden" id="delete_instructor_id" name="delete_instructor_id">
+          <input type="hidden" id="delete_user_id" name="delete_user_id">
           <p>Are you sure you want to delete this instructor?</p>
         </div>
         <div class="modal-footer">
@@ -215,7 +215,10 @@ include('sidebar.php');
               </thead>
               <tbody>
                 <?php 
-                $query = "SELECT * FROM instructors";
+                $query = "SELECT instructors.*, users.user_id
+                          FROM instructors JOIN users
+                          ON instructors.instructor_id = users.user_id";
+
                 $run_query = mysqli_query($conn, $query);
                 
                 if (!$run_query) {
@@ -238,7 +241,7 @@ include('sidebar.php');
                         <!-- Update Instructor Button -->
                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#updateInstructorModal" onclick="updateInstructor('<?php echo $row['instructor_id']; ?>', '<?php echo $row['full_name']; ?>', '<?php echo $row['birthdate']; ?>', '<?php echo $row['gender']; ?>', '<?php echo $row['phone_number']; ?>', '<?php echo $row['address']; ?>')">Update</button>
                         <!-- Delete Instructor Button -->
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteInstructorModal" onclick="deleteInstructor('<?php echo $row['instructor_id']; ?>')">Delete</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteInstructorModal" onclick="deleteInstructor('<?php echo $row['user_id']; ?>')">Delete</button>
                       </td>
                     </tr>
                     <?php
@@ -268,8 +271,8 @@ function updateInstructor(instructor_id, full_name, birthdate, gender, phone_num
   document.getElementById("update_address").value = address;
 }
 
-function deleteInstructor(instructor_id) {
-  document.getElementById("delete_instructor_id").value = instructor_id;
+function deleteInstructor(user_id) {
+  document.getElementById("delete_user_id").value = user_id;
 }
 </script>
 

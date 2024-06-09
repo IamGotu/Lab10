@@ -97,32 +97,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
 
 // Deleting Instructor
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['deleteInstructor'])) {
-    // Ensure field is initialized
-    $user_id = $_POST['delete_user_id'];
+
+    // Sanitize
+    $user_id = mysqli_real_escape_string($conn, $_POST['delete_user_id']);
+
 
     // Construct SQL query for deleting instructor data
-    $sql = "DELETE FROM users WHERE user_id=?";
+    $sql = "DELETE FROM users WHERE user_id = ?";
 
     // Prepare the statement
     $stmt = mysqli_prepare($conn, $sql);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "i", $instructor_id);
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['auth_status'] = "Instructors deleted successfully";
+        $_SESSION['auth_status'] = "Instructor deleted successfully";
         header('Location: ../TheAdmin/Instructors.php');
         exit(0);
     } else {
-        $_SESSION['auth_status'] = "Error deleting instructor";
+        $_SESSION['auth_status'] = "Error deleting instructor: " . mysqli_error($conn);
         header('Location: ../TheAdmin/Instructors.php');
         exit(0);
     }
-
+    
 // updating Instructor
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateInstructor'])) {
 
+    // Sanitize
     $instructor_id = mysqli_real_escape_string($conn, $_POST['update_instructor_id']);
     $full_name = mysqli_real_escape_string($conn, $_POST['update_full_name']);
     $birthdate = mysqli_real_escape_string($conn, trim($_POST['update_birthdate'])); // Ensure the birthdate is retrieved correctly
