@@ -71,7 +71,7 @@ $user_details = $_SESSION['user_details'];
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheAdmin/enroll_Subjects.php" class="nav-link">
+                    <a href="../TheAdmin/Subjects_enroll.php" class="nav-link">
                         <i class="nav-icon fa fa-check-circle"></i>
                         <p>
                             Enroll Subject
