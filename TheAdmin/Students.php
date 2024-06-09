@@ -2,10 +2,10 @@
 session_start();
 
 // Check if user is not logged in
-if (!isset($_SESSION['auth'])) {
-    $_SESSION['auth_status'] = "You need to be logged in to access this page";
-    header('Location: loginform.php');
-    exit();
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
+  $_SESSION['auth_status'] = "You need to be logged in to access this page";
+  header('Location: ../loginform.php');
+  exit();
 }
 
 // Include necessary files
@@ -18,107 +18,121 @@ include('sidebar.php');
 <div class="content-wrapper">
 
 <!-- Enroll Student Modal -->
-<div class="modal fade" id="enrollStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Enroll Student</h1>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="close"></button>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="add_delete_Student.php" method="post">
+      <form action="Student_add_delete_update.php" method="post">
       <div class="modal-body">
-          <input type="hidden" id="student_id" name="student_id" class="form-control">
+
         <div class="form-group">
-          <label for="full_name">Full Name</label>
-          <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name">
+          <input type="hidden" id="user_id" name="user_id" class="form-control">
+          <input type="hidden" name="role" class="form-control" >
+          <input type="hidden" id="password" name="password" class="form-control">
+          <input type="hidden" name="user_id" class="form-control"> 
+          <input type="hidden" name="Status" class="form-control">
+          <input type="hidden" name="Active" class="form-control">
+          <input type="hidden" name="profile_picture" class="form-control-file" >
         </div>
+
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+            <label for="full_name">Full Name</label>
+            <input type="text" name="full_name" class="form-control" placeholder="Full Name" title="Format: First Name Middle Name (if applicable) Last Name" required>
+            <small>Format: First Name Middle Name (if applicable) Last Name</small>
         </div>
+
         <div class="form-group">
-          <label for="address">Address</label>
-          <input type="text" id="address" name="address" class="form-control" placeholder="Address">
+          <label for="birthdate">Birthdate</label>
+          <input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
         </div>
-        <div class="form-group">
-          <label for="age">Age</label>
-          <input type="text" id="age" name="age" class="form-control" placeholder="Age">
-        </div>
+
         <div class="form-group">
           <label for="gender">Gender</label>
           <select id="gender" name="gender" class="form-control" required>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+            <option value="PREFER NOT TO SAY">PREFER NOT TO SAY</option>
           </select>
         </div>
+
         <div class="form-group">
-          <label for="course">Course</label>
-          <input type="text" id="course" name="course" class="form-control" placeholder="Course">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Email" title="Please use proper format (e.g email@gmail.com)" required>
+          <span id="emailError" style="color: red;"></span>
         </div>
-          <input type="hidden" id="password" name="password" class="form-control">
+
+        <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input type="tel" name="phone_number" class="form-control" placeholder="+63XXXXXXXXXX" pattern="^\+\d{1,3}\d{4,14}$" required>
+            <small>Format: +CountryCodePhoneNumber (e.g., +63XXXXXXXXXX)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" name="address" class="form-control" placeholder="Address" required>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="addStudent" class="btn btn-primary">Enroll</button>
+        <button type="submit" name="addStudent" class="btn btn-primary">Enroll Student</button>
       </div>
       </form>
     </div>
   </div>
 </div>
 
-<!-- Edit Student Modal -->
-<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- update Student Modal -->
+<div class="modal fade" id="updateStudentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Student</h1>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="close"></button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Student</h1>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="edit_Student.php" method="post">
-      <div class="modal-body">
-          <input type="hidden" id="edit_student_id" name="edit_student_id" class="form-control">
+      <form action="Student_add_delete_update.php" method="post">
+        <div class="modal-body">
+
+        <input type="hidden" id="update_student_id" name="update_student_id" class="form-control">
+
         <div class="form-group">
-          <label for="edit_full_name">Full Name</label>
-          <input type="text" id="edit_full_name" name="edit_full_name" class="form-control" placeholder="Full Name" required>
+          <label for="update_full_name">Full Name</label>
+          <input type="text" id="update_full_name" name="update_full_name" class="form-control" placeholder="Full Name" required>
         </div>
+
         <div class="form-group">
-          <label for="edit_email">Email</label>
-          <input type="email" id="edit_email" name="edit_email" class="form-control" placeholder="Email" required>
+          <label for="update_birthdate">Birthdate</label>
+          <input type="date" id="update_birthdate" name="update_birthdate" class="form-control" placeholder="Birthdate" required>
         </div>
+        
         <div class="form-group">
-          <label for="edit_address">Address</label>
-          <input type="text" id="edit_address" name="edit_address" class="form-control" placeholder="Address" required>
-        </div>
-        <div class="form-group">
-          <label for="edit_age">Age</label>
-          <input type="number" id="edit_age" name="edit_age" class="form-control" placeholder="Age" required>
-        </div>
-        <div class="form-group">
-          <label for="edit_gender">Gender</label>
-          <select id="edit_gender" name="edit_gender" class="form-control" required>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
+          <label for="update_gender">Gender</label>
+          <select id="update_gender" name="update_gender" class="form-control" required>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+            <option value="PREFER NOT TO SAY">PREFER NOT TO SAY</option>
           </select>
         </div>
+
+        
         <div class="form-group">
-          <label for="edit_course">Course</label>
-          <input type="text" id="edit_course" name="edit_course" class="form-control" placeholder="Course" required>
+          <label for="update_phone_number">Phone Number</label>
+          <input type="tel" id="update_phone_number" name="update_phone_number" class="form-control" placeholder="+63XXXXXXXXXX" pattern="^\+\d{1,3}\d{4,14}$" required>
+          <small>Format: +CountryCodePhoneNumber (e.g., +63XXXXXXXXXXX)</small>
         </div>
+            
         <div class="form-group">
-          <label for="edit_password">Password</label>
-          <input type="password" id="edit_password" name="edit_password" class="form-control" placeholder="Password" required>
+          <label for="update_address">Address</label>
+          <input type="text" id="update_address" name="update_address" class="form-control" placeholder="Address" required>
         </div>
-        <div class="form-group">
-          <label for="edit_confirm_password">Confirm Password</label>
-          <input type="password" id="edit_confirm_password" name="edit_confirm_password" class="form-control" placeholder="Confirm Password" required>
-          <span id="passwordError" style="color: red;"></span>
-        </div>
+            
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="updateStudent" class="btn btn-primary">Save Changes</button>
+        <button type="submit" name="updateStudent" class="btn btn-primary">Update</button>
       </div>
       </form>
     </div>
@@ -130,18 +144,20 @@ include('sidebar.php');
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Student</h1>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="close"></button>
+        <h5 class="modal-title" id="exampleModalLabel">Delete Student</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <form action="add_delete_Student.php" method="post">
-      <div class="modal-body">
-        <input type="hidden" id="delete_student_id" name="delete_student_id">
-        <p>Are you sure you want to delete this student?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="deleteStudent" class="btn btn-primary">Yes, Delete!</button>
-      </div>
+      <form action="Student_add_delete_update.php" method="post">
+        <div class="modal-body">
+          <input type="hidden" id="delete_user_id" name="delete_user_id">
+          <p>Are you sure you want to delete this student?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" name="deleteStudent" class="btn btn-danger">Delete</button>
+        </div>
       </form>
     </div>
   </div>
@@ -152,54 +168,57 @@ include('sidebar.php');
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Dashboard</h1>
+        <h1 class="m-0">Students</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="admin_Home.php">Home</a></li>
-          <li class="breadcrumb-item active">Enroll Students</li>
+          <li class="breadcrumb-item active">Students</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
+ 
+<?php
+  include ('../includes/message.php');
+?>
 
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <?php   
-        if (isset($_SESSION['status'])) {
-          echo "<h4>".$_SESSION['status']."</h4>";
-          unset($_SESSION['status']);
-        }
-        ?>
+        <!-- PHP code for displaying session status -->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Enroll Students</h3>
+            <h3 class="card-title">Students</h3>
             <!-- Enroll Student Button -->
-            <button type="button" class="btn btn-primary bt-sm float-right" data-toggle="modal" data-target="#enrollStudentModal">Enroll Student</button>
+            <button type="button" class="btn btn-primary bt-sm float-right" data-toggle="modal" data-target="#addStudentModal">Enroll Student</button>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Student ID</th>
                   <th>Name</th>
-                  <th>Email</th>
-                  <th>Address</th>
+                  <th>Birthdate</th>
                   <th>Age</th>
                   <th>Gender</th>
-                  <th>Course</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <?php 
-                $query = "SELECT * FROM student_list";
+                $query = "SELECT students.*, users.user_id
+                          FROM students JOIN users
+                          ON students.student_id = users.user_id";
+
                 $run_query = mysqli_query($conn, $query);
                 
                 if (!$run_query) {
@@ -212,22 +231,23 @@ include('sidebar.php');
                     <tr>
                       <td><?php echo $row['student_id'] ?></td>
                       <td><?php echo $row['full_name'] ?></td>
-                      <td><?php echo $row['email'] ?></td>
-                      <td><?php echo $row['address'] ?></td>
+                      <td><?php echo $row['birthdate'] ?></td>
                       <td><?php echo $row['age'] ?></td>
                       <td><?php echo $row['gender'] ?></td>
-                      <td><?php echo $row['course'] ?></td>
+                      <td><?php echo $row['email'] ?></td>
+                      <td><?php echo $row['phone_number'] ?></td>
+                      <td><?php echo $row['address'] ?></td>
                       <td>
-                        <!-- Edit Student Button -->
-                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editStudentModal" onclick="editStudent('<?php echo $row['student_id']; ?>', '<?php echo $row['full_name']; ?>', '<?php echo $row['email']; ?>', '<?php echo $row['address']; ?>', '<?php echo $row['age']; ?>', '<?php echo $row['gender']; ?>', '<?php echo $row['course']; ?>', '<?php echo $row['password']; ?>',)">Edit</button>
+                        <!-- Update Student Button -->
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#updateStudentModal" onclick="updateStudent('<?php echo $row['student_id']; ?>', '<?php echo $row['full_name']; ?>', '<?php echo $row['birthdate']; ?>', '<?php echo $row['gender']; ?>', '<?php echo $row['phone_number']; ?>', '<?php echo $row['address']; ?>')">Update</button>
                         <!-- Delete Student Button -->
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteStudentModal" onclick="deleteStudent('<?php echo $row['student_id']; ?>')">Delete</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteStudentModal" onclick="deleteStudent('<?php echo $row['user_id']; ?>')">Delete</button>
                       </td>
                     </tr>
                     <?php
                   }
                 } else {
-                  echo "<tr><td colspan='5'>No records found</td></tr>";
+                  echo "<tr><td colspan='7'>No records found</td></tr>";
                 }
                 ?>
               </tbody>
@@ -241,27 +261,25 @@ include('sidebar.php');
 
 </div>
 
-<?php 
-include("../includes/script.php");
-?>
-
 <script>
-function editStudent(student_id, full_name, email, address, age, gender, course, password) {
-  document.getElementById("edit_student_id").value = student_id;
-  document.getElementById("edit_full_name").value = full_name;
-  document.getElementById("edit_email").value = email;
-  document.getElementById("edit_address").value = address;
-  document.getElementById("edit_age").value = age;
-  document.getElementById("edit_gender").value = gender;
-  document.getElementById("edit_course").value = course;
-  document.getElementById("edit_password").value = password;
+function updateStudent(student_id, full_name, birthdate, gender, phone_number, address) {
+  document.getElementById("update_student_id").value = student_id;
+  document.getElementById("update_full_name").value = full_name;
+  document.getElementById("update_birthdate").value = birthdate;
+  document.getElementById("update_gender").value = gender;
+  document.getElementById("update_phone_number").value = phone_number;
+  document.getElementById("update_address").value = address;
 }
 
-function deleteStudent(student_id) {
-  document.getElementById("delete_student_id").value = student_id;
+function deleteStudent(user_id) {
+  document.getElementById("delete_user_id").value = user_id;
 }
 </script>
 
+
+<?php 
+include("../includes/script.php");
+?>
 <?php 
 include("footer.php");
 ?>
