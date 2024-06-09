@@ -127,7 +127,7 @@
                             <div class="form-group">
                                 <label for="phone_number">Phone Number</label>
                                 <input type="tel" name="phone_number" class="form-control" placeholder="+63XXXXXXXXXX" pattern="^\+\d{1,3}\d{4,14}$" required>
-                                <small>Format: +CountryCodePhoneNumber (e.g., +639171234567)</small>
+                                <small>Format: +CountryCodePhoneNumber (e.g., +63XXXXXXXXXX)</small>
                             </div>
 
                             <div class="form-group">
@@ -137,11 +137,10 @@
 
                             <div class="form-group">
                                 <label for="gender">Gender:</label>
-                                        <select name="gender" id="gender">
-                                            <option value="male">MALE</option>
-                                            <option value="female">FEMALE</option>
-                                            <option value="undecided">PREFER NOT TO SAY</option>
-                                            <option value="potato_chips">POTATO CHIPS</option>
+                                    <select name="gender" id="gender">
+                                    <option value="MALE">MALE</option>
+                                    <option value="FEMALE">FEMALE</option>
+                                    <option value="PREFER NOT TO SAY">PREFER NOT TO SAY</option>
                                         </select>
                             </div>
 
