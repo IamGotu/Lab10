@@ -81,16 +81,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
         $stmt_instructor->bind_param("isssissss", $user_id, $profile_picture, $full_name, $birthdateStr, $age, $gender, $email, $phone_number, $address);
 
         if ($stmt_instructor->execute()) {
-            $_SESSION['status'] = "Instructor added successfully";
+            $_SESSION['auth_status'] = "Instructor added successfully";
             header('Location: ../TheAdmin/Instructors.php');
             exit();
         } else {
-            $_SESSION['status'] = "Error adding instructor.";
+            $_SESSION['auth_status'] = "Error adding instructor.";
             header('Location: Instructors.php?error=Error adding instructor');
             exit();
         }
     } else {
-        $_SESSION['status'] = "Error adding user.";
+        $_SESSION['auth_status'] = "Error adding user.";
         header('Location: Instructors.php?error=Error adding user');
         exit();
     }

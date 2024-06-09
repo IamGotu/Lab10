@@ -81,16 +81,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addStudent'])) { // Ch
         $stmt_student->bind_param("isssissss", $user_id, $profile_picture, $full_name, $birthdateStr, $age, $gender, $email, $phone_number, $address);
 
         if ($stmt_student->execute()) {
-            $_SESSION['status'] = "Student added successfully";
+            $_SESSION['auth_status'] = "Student added successfully";
             header('Location: ../TheAdmin/Students.php');
             exit();
         } else {
-            $_SESSION['status'] = "Error adding student.";
+            $_SESSION['auth_status'] = "Error adding student.";
             header('Location: Students.php?error=Error adding student');
             exit();
         }
     } else {
-        $_SESSION['status'] = "Error adding user.";
+        $_SESSION['auth_status'] = "Error adding user.";
         header('Location: Students.php?error=Error adding user');
         exit();
     }
