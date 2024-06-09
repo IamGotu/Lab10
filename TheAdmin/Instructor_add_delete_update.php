@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
 
     // Check if age is less than 14
     if ($age < 14) {
-        $_SESSION['auth_status'] = "You must be at least 14 years old to register.";
-        header("Location: Instructors.php?error=You must be at least 14 years old to register.");
+        $_SESSION['auth_status'] = "The user must be at least 14 years old to register.";
+        header("Location: Instructors.php?error=The user must be at least 14 years old to register.");
         exit();
     }
 
