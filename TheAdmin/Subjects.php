@@ -115,13 +115,6 @@ include('sidebar.php');
     <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <?php   
-            if (isset($_SESSION['status'])) {
-              echo "<h4>".$_SESSION['status']."</h4>" ;
-              unset($_SESSION['status']);
-            }
-
-            ?>
 
             <!-- /.card-header -->
             <div class="card-body">

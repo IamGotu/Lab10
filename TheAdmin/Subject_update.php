@@ -20,16 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editSubjectbtn'], $_PO
 
     // Check if the update was successful
     if ($update_result) {
-        $_SESSION['status'] = "Subject updated successfully";
+        $_SESSION['auth_status'] = "Subject updated successfully";
     } else {
-        $_SESSION['status'] = "Error updating subject: " . mysqli_error($conn);
+        $_SESSION['auth_status'] = "Error updating subject: " . mysqli_error($conn);
     }
 
     // Redirect back to enroll_Subjects.php
     header('Location: ../TheAdmin/enroll_Subjects.php');
     exit();
 } else {
-    $_SESSION['status'] = "Invalid request";
+    $_SESSION['auth_status'] = "Invalid request";
     header('Location: ../TheAdmin/enroll_Subjects.php');
     exit();
 }

@@ -25,15 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Check if the update was successful
         if ($update_result) {
-            $_SESSION['status'] = "Subjects added successfully";
+            $_SESSION['auth_status'] = "Subjects added successfully";
         } else {
-            $_SESSION['status'] = "Error updating subjects: " . mysqli_error($conn);
+            $_SESSION['auth_status'] = "Error updating subjects: " . mysqli_error($conn);
         }
 
         header('Location: ../TheAdmin/Subjects_enroll.php');
         exit();
     } else {
-        $_SESSION['status'] = "No subjects selected";
+        $_SESSION['auth_status'] = "No subjects selected";
         header('Location: ../TheAdmin/Subjects_enroll.php');
         exit();
     }

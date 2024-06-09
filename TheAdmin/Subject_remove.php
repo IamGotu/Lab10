@@ -11,9 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteSubjectbtn'])) {
     mysqli_stmt_bind_param($stmt, "i", $student_id);
 
     if (mysqli_stmt_execute($stmt)) {
-        $_SESSION['status'] = "Subject deleted successfully";
+        $_SESSION['auth_status'] = "Subject deleted successfully";
     } else {
-        $_SESSION['status'] = "Error deleting subject: " . mysqli_error($conn);
+        $_SESSION['auth_status'] = "Error deleting subject: " . mysqli_error($conn);
     }
 
     mysqli_stmt_close($stmt);
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteSubjectbtn'])) {
     header('Location: ../TheAdmin/Subjects_enroll.php');
     exit();
 } else {
-    $_SESSION['status'] = "Invalid request";
+    $_SESSION['auth_status'] = "Invalid request";
     header('Location: ../TheAdmin/Subjects_enroll.php');
     exit();
 }
