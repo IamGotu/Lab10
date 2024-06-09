@@ -1,9 +1,16 @@
 <?php
-include('Authentication.php');
-include('includes/header.php');
-include('includes/topbar.php');
-include('includes/sidebar.php');
-include('config/db_conn.php');
+session_start();
+
+// Check if user is not logged in
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
+    $_SESSION['auth_status'] = "You need to be logged in to access this page";
+    header('Location: ../loginform.php');
+    exit();
+}
+include('../includes/header.php');
+include('topbar.php');
+include('sidebar.php');
+include('../database/db_conn.php');
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -28,7 +35,7 @@ include('config/db_conn.php');
     <!-- /.content-header -->
 
     <?php
-        include('message.php');
+        include('../includes/message.php');
     ?>
 
 <section class="content">
