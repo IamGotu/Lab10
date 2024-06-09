@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addInstructor'])) { //
         exit();
     }
 } else {
-    $_SESSION['auth_status'] = "Failed to update instructor details. Error: " . mysqli_error($conn);
+    $_SESSION['auth_status'] = "Action Failed. Error: " . mysqli_error($conn);
     header('Location: ../TheAdmin/Instructors.php');
     exit();
 }
