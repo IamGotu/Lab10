@@ -83,8 +83,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="student_id">Email </label>
-                                <input type="text" name="student_id" class="form-control" required>
+                                <label for="email">Email</label>
+                                <input type="email" name="email" class="form-control" required>
                             </div>
 
                             <div class="form-group">
