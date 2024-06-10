@@ -1,3 +1,13 @@
+<?php
+// Check if user is not logged in
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
+    $_SESSION['auth_status'] = "You need to be logged in to access this page";
+    header('Location: ../loginform.php');
+    exit();
+}
+
+$user_details = $_SESSION['user_details'];
+?>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
   <!-- Left navbar links -->
@@ -16,19 +26,17 @@
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-      <?php if (isset($_SESSION['auth'])) { ?>
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-            <?php echo $_SESSION['auth_user']['full_name']; ?>
+            <?php echo $user_details['full_name']; ?>
           </button>
           <ul class="dropdown-menu">
+            <li><a href="../TheAdmin/User_Profile.php" class="dropdown-item">User Profile</a></li>
             <li><a href="../logout.php" class="dropdown-item">Logout</a></li>
           </ul>
         </div>
-      <?php } else { ?>
-        <a href="loginform.php" class="nav-link">Login</a>
-      <?php } ?>
     </li>
+    
     <!-- Navbar Search -->
     <li class="nav-item">
       <a class="nav-link" data-widget="navbar-search" href="#" role="button">
