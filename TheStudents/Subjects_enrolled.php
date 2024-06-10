@@ -28,7 +28,7 @@ include('sidebar.php');
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="../TheStudents/student_Home.php">Home</a></li>
+                        <li class="breadcrumb-item"><a href="../TheStudents/Dashboard.php">Home</a></li>
                         <li class="breadcrumb-item active">Enrolled Subjects</li>
                     </ol>
                 </div><!-- /.col -->

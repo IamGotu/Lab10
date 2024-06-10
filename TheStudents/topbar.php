@@ -16,7 +16,7 @@ $user_details = $_SESSION['user_details'];
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="../TheStudents/student_Home.php" class="nav-link">Home</a>
+      <a href="../TheStudents/Dashboard.php" class="nav-link">Home</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
       <a href="../TheStudents/contact.php" class="nav-link">Contact</a>

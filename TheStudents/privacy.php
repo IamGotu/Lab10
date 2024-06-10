@@ -95,9 +95,9 @@
     <h2>Your Consent</h2>
     <p>By using our site, you consent to our website's privacy policy.</p>
     
-    <!-- Button to go back to student_Home.php -->
+    <!-- Button to go back to Dashboard.php -->
     <div style="text-align: center;">
-        <a href="../TheStudents/student_Home" class="btn">Back to Home</a>
+        <a href="../TheStudents/Dashboard" class="btn">Back to Home</a>
     </div>
 </div>
 
