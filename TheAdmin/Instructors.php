@@ -99,8 +99,9 @@ include('sidebar.php');
         <input type="hidden" id="update_instructor_id" name="update_instructor_id" class="form-control">
 
         <div class="form-group">
-          <label for="update_full_name">Full Name</label>
-          <input type="text" id="update_full_name" name="update_full_name" class="form-control" placeholder="Full Name" required>
+            <label for="full_name">Full Name</label>
+            <input type="text" name="full_name" class="form-control" placeholder="Full Name" title="Format: First Name Middle Name (if applicable) Last Name" required>
+            <small>Format: First Name Middle Name (if applicable) Last Name</small>
         </div>
 
         <div class="form-group">
