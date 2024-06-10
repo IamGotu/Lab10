@@ -56,7 +56,7 @@ include('../database/db_conn.php');
                         <img src="<?php echo 'assets/dist/img/' . $user_details['profile_picture']; ?>" class="profile-image img-circle elevation-3" style="opacity: .8; width: 200px; height: 200px;">
                     </div>
 
-                    <br><br>
+                        <br><br>
                         <label>Full Name</label>
                         <br>
                         <?php echo $user_details['full_name'] ?>
