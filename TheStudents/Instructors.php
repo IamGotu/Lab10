@@ -2,9 +2,19 @@
 session_start();
 
 // Check if user is not logged in
-if (!isset($_SESSION['auth'])) {
-    $_SESSION['auth_status'] = "You need to be logged in to access this page";
-    header('Location: ../loginform.php');
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
+  $_SESSION['auth_status'] = "You need to be logged in to access this page";
+  header('Location: ../loginform.php');
+  exit();
+}
+
+// Specificaly admin access only
+$required_role = 'student';
+
+// Check if the user has the required role
+if ($_SESSION['role'] !== $required_role) {
+    $_SESSION['auth_status'] = "You do not have permission to access this page";
+    header('Location: Dashboard.php');
     exit();
 }
 
@@ -21,18 +31,22 @@ include('sidebar.php');
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Dashboard</h1>
+        <h1 class="m-0">Instructors</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="Dashboard.php">Home</a></li>
-          <li class="breadcrumb-item active">Teachers</li>
+          <li class="breadcrumb-item active">Instructors</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
+
+<?php
+  include ('../includes/message.php');
+?>
 
 <!-- Main content -->
 <section class="content">
@@ -42,24 +56,29 @@ include('sidebar.php');
         <!-- PHP code for displaying session status -->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Teachers</h3>
+            <h3 class="card-title">Instructors</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>Teacher ID</th>
+                  <th>Instructor ID</th>
                   <th>Name</th>
-                  <th>Email</th>
-                  <th>Address</th>
+                  <th>Birthdate</th>
                   <th>Age</th>
                   <th>Gender</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
                 </tr>
               </thead>
               <tbody>
                 <?php 
-                $query = "SELECT * FROM teachers";
+                $query = "SELECT instructors.*, users.user_id
+                          FROM instructors JOIN users
+                          ON instructors.instructor_id = users.user_id";
+
                 $run_query = mysqli_query($conn, $query);
                 
                 if (!$run_query) {
@@ -70,12 +89,14 @@ include('sidebar.php');
                   while ($row = mysqli_fetch_assoc($run_query)) {
                     ?>
                     <tr>
-                      <td><?php echo $row['teacher_id'] ?></td>
+                      <td><?php echo $row['instructor_id'] ?></td>
                       <td><?php echo $row['full_name'] ?></td>
-                      <td><?php echo $row['email'] ?></td>
-                      <td><?php echo $row['address'] ?></td>
+                      <td><?php echo $row['birthdate'] ?></td>
                       <td><?php echo $row['age'] ?></td>
                       <td><?php echo $row['gender'] ?></td>
+                      <td><?php echo $row['email'] ?></td>
+                      <td><?php echo $row['phone_number'] ?></td>
+                      <td><?php echo $row['address'] ?></td>
                     </tr>
                     <?php
                   }
