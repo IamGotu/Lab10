@@ -109,7 +109,7 @@ include('../database/db_conn.php');
             
                             <div class="form-group">
                                 <label for="profile_picture">Profile Picture</label>
-                                <input type="file" id="profile_picture" name="profile_picture" class="form-control-file" required>
+                                <input type="file" id="profile_picture" name="profile_picture" value="<?php echo $user_details['profile_picture'] ?>" class="form-control-file" required>
                             </div>
 
                             <div class="text-right">
@@ -130,16 +130,29 @@ include('../database/db_conn.php');
                     <div class="card-body">
 
                     <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
+
                         <input type="hidden" id="admin_id" name="admin_id" value="<?php echo $user_details['admin_id'] ?>">
 
                         <div class="form-group">
                             <label for="full_name">Full Name</label>
-                            <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name" value="<?php echo $user_details['full_name'] ?>" required>
+                            <input type="text" name="full_name" class="form-control" placeholder="Full Name" value="<?php echo $user_details['full_name'] ?>" title="Format: First Name Middle Name (if applicable) Last Name" required>
+                            <small>Format: First Name Middle Name (if applicable) Last Name</small>
                         </div>
-                        
+
+                        <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" class="form-control" required>
+                            <option value="MALE" <?php echo ($user_details['gender'] == 'MALE') ? 'selected' : ''; ?>>MALE</option>
+                            <option value="FEMALE" <?php echo ($user_details['gender'] == 'FEMALE') ? 'selected' : ''; ?>>FEMALE</option>
+                            <option value="PREFER NOT TO SAY" <?php echo ($user_details['gender'] == 'PREFER NOT TO SAY') ? 'selected' : ''; ?>>PREFER NOT TO SAY</option>
+                        </select>
+                        </div>
+
+        
                         <div class="form-group">
                             <label for="phone_number">Phone Number</label>
-                            <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Phone Number" value="<?php echo $user_details['phone_number'] ?>" required>
+                            <input type="tel" id="phone_number" name="phone_number" class="form-control" placeholder="+63XXXXXXXXXX" value="<?php echo $user_details['phone_number'] ?>" pattern="^\+\d{1,3}\d{4,14}$" required>
+                            <small>Format: +CountryCodePhoneNumber (e.g., +63XXXXXXXXXXX)</small>
                         </div>
                         
                         <div class="form-group">
@@ -196,7 +209,7 @@ include('../database/db_conn.php');
                                     <div class="col-md">
                                         <div class="form-group">
                                             <label for="new_password">New Password</label>
-                                            <input type="password" name="new_password" class="form-control" placeholder="Password" required>
+                                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder=" New Password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{5,}" title="Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 5 characters long." required>
                                         </div>
                                     </div>
                                     
@@ -218,8 +231,6 @@ include('../database/db_conn.php');
 
     </div>
 </section>
-
-
 </div>
 
 <?php include('../includes/script.php'); ?>

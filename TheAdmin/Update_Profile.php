@@ -1,8 +1,11 @@
 <?php
 session_start();
 
+$user_details = $_SESSION['user_details'];
+
 // Include file for database connection
 include('../database/db_conn.php');
+
 
 // Validation function to sanitize input data
 function validate($data) {
@@ -13,7 +16,7 @@ function validate($data) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user_id = isset($_POST['admin_id']) ? validate($_POST['admin_id']) : null;
+    $admin_id = isset($_POST['admin_id']) ? validate($_POST['admin_id']) : null;
 
     switch (true) {
         case isset($_POST['UpdatePicture']):
@@ -29,15 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $update_sql = "UPDATE admin SET profile_picture = ? WHERE admin_id = ?";
             $stmt = $conn->prepare($update_sql);
-            $stmt->bind_param("si", $profile_picture, $user_id);
+            $stmt->bind_param("si", $profile_picture, $admin_id);
         
             if ($stmt->execute()) {
                 move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'assets/dist/img/'.$profile_picture);
         
-                // Fetch the updated user details
+                // Fetch the updated profile picture
                 $fetch_sql = "SELECT * FROM admin WHERE admin_id = ?";
                 $fetch_stmt = $conn->prepare($fetch_sql);
-                $fetch_stmt->bind_param("i", $user_id);
+                $fetch_stmt->bind_param("i", $admin_id);
                 $fetch_stmt->execute();
                 $result = $fetch_stmt->get_result();
                 $updatedUserDetails = $result->fetch_assoc();
@@ -57,14 +60,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case isset($_POST['UpdateInfo']):
             $full_name = validate($_POST['full_name']);
+            $gender = validate($_POST['gender']);
             $phone_number = validate($_POST['phone_number']);
             $address = validate($_POST['address']);
 
-            $update_sql = "UPDATE admin SET full_name = ?, phone_number = ?, address = ? WHERE user_id = ?";
+            $update_sql = "UPDATE admin SET full_name = ?, gender = ?, phone_number = ?, address = ? WHERE admin_id = ?";
             $stmt = $conn->prepare($update_sql);
-            $stmt->bind_param("sssi", $full_name, $phone_number, $address, $user_id);
+            $stmt->bind_param("ssssi", $full_name, $gender, $phone_number, $address, $admin_id);
 
             if ($stmt->execute()) {
+
+                // Fetch the updated user details
+                $fetch_sql = "SELECT * FROM admin WHERE admin_id = ?";
+                $fetch_stmt = $conn->prepare($fetch_sql);
+                $fetch_stmt->bind_param("i", $admin_id);
+                $fetch_stmt->execute();
+                $result = $fetch_stmt->get_result();
+                $updatedUserDetails = $result->fetch_assoc();
+        
+                // Update the session with the new user details
+                $_SESSION['user_details'] = $updatedUserDetails;
                 $_SESSION['auth_status'] = "User Information Updated Successfully";
                 header('Location: User_Profile.php');
                 exit(0);
@@ -87,11 +102,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             } else {
                 $birthdateStr = $birthday->format('Y-m-d');
-                $update_sql = "UPDATE user_profile SET birthdate = ? WHERE user_id = ?";
+                $update_sql = "UPDATE admin SET birthdate = ?, age = ? WHERE admin_id = ?";
                 $stmt = $conn->prepare($update_sql);
-                $stmt->bind_param("si", $birthdateStr, $user_id);
+                $stmt->bind_param("sii", $birthdateStr, $age, $admin_id);
 
                 if ($stmt->execute()) {
+
+                    // Fetch the updated user details
+                    $fetch_sql = "SELECT * FROM admin WHERE admin_id = ?";
+                    $fetch_stmt = $conn->prepare($fetch_sql);
+                    $fetch_stmt->bind_param("i", $admin_id);
+                    $fetch_stmt->execute();
+                    $result = $fetch_stmt->get_result();
+                    $updatedUserDetails = $result->fetch_assoc();
+            
+                    // Update the session with the new user details
+                    $_SESSION['user_details'] = $updatedUserDetails;
+
                     $_SESSION['auth_status'] = "Birthdate Update Successfully";
                     header('Location: User_Profile.php');
                     exit(0);
@@ -103,34 +130,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
 
-        case isset($_POST['UpdatePass']):
-            $current_password = validate($_POST['current_password']);
-            $new_password = validate($_POST['new_password']);
-            $confirm_password = validate($_POST['confirm_password']);
-
-            // Check if new password and confirm password match
-            if ($new_password !== $confirm_password) {
-                $_SESSION['auth_status'] = "New password and confirm password do not match";
+            // Check if the form submitted is for updating the password
+            case isset($_POST['UpdatePass']):
+                $new_password = validate($_POST['new_password']);
+                $confirm_password = validate($_POST['confirm_password']);
+    
+                // Check if new password and confirm password match
+                if ($new_password !== $confirm_password) {
+                    $_SESSION['auth_status'] = "New password and confirm password do not match";
+                    header('Location: User_Profile.php');
+                    exit(0);
+                }
+        
+                // Update the password in the users table where user_id = admin_id
+                $update_sql = "UPDATE users SET password = ? WHERE user_id = ?";
+                $stmt = $conn->prepare($update_sql);
+    
+                if (!$stmt) {
+                    $_SESSION['auth_status'] = "Password Update Failed: Preparation failed - " . $conn->error;
+                    header("Location: User_Profile.php");
+                    exit(0);
+                }
+    
+                $stmt->bind_param("si", $new_password, $admin_id);
+    
+                if ($stmt->execute()) {
+                    $_SESSION['auth_status'] = "Password Updated Successfully";
+                } else {
+                    $_SESSION['auth_status'] = "Password Update Failed: " . $stmt->error;
+                }
+    
+                $stmt->close();
+                $conn->close();
+    
                 header('Location: User_Profile.php');
                 exit(0);
-            }
-
-            // Update the password
-            $update_sql = "UPDATE user_profile SET password = ? WHERE user_id = ?";
-            $stmt = $conn->prepare($update_sql);
-            $stmt->bind_param("si", $new_password, $user_id);
-
-            if ($stmt->execute()) {
-                $_SESSION['auth_status'] = "Password Updated Successfully";
-                header('Location: User_Profile.php');
-                exit(0);
-            } else {
-                $_SESSION['auth_status'] = "Password Update Failed: " . $stmt->error;
-                header("Location: User_Profile.php");
-                exit(0);
-            }
-            break;
-
+                
         default:
             $_SESSION['auth_status'] = "No valid action specified";
             header("Location: User_Profile.php");
