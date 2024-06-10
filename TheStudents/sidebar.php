@@ -71,7 +71,7 @@ $user_details = $_SESSION['user_details'];
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheStudents/enrolled_Subjects.php" class="nav-link">
+                    <a href="../TheStudents/Subjects_enrolled.php" class="nav-link">
                         <i class="nav-icon fa fa-check-circle"></i>
                         <p>
                             Enrolled Subjects
