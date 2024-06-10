@@ -23,7 +23,7 @@ if (isset($_POST['signup_btn'])) {
     $confirm_password = validate($_POST['confirm_password']);
     $status = 'Pending'; // Set default value
     $active = 'Offline'; // Set default value
-    $verify_token = bin2hex(random_bytes(2)); // Generate a unique verification token
+    $verify_token = mt_rand(100000, 999999); // Generate a random 6-digit code
     
     $profile_picture = 'user.png'; // Set default value
     $full_name = validate($_POST['full_name']);
@@ -34,7 +34,7 @@ if (isset($_POST['signup_btn'])) {
 
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['status'] = "Invalid email format.";
+        $_SESSION['auth_status'] = "Invalid email format.";
         header("Location: signupform.php?error=Invalid email format");
         exit();
     }
@@ -43,28 +43,28 @@ if (isset($_POST['signup_btn'])) {
     $sql_check_email = "SELECT * FROM users WHERE email='$email'";
     $result_check_email = mysqli_query($conn, $sql_check_email);
     if (mysqli_num_rows($result_check_email) > 0) {
-        $_SESSION['status'] = "Email already exists.";
+        $_SESSION['auth_status'] = "Email already exists.";
         header("Location: signupform.php?error=Email already exists");
         exit();
     }
 
     // Check if new password and confirm password match
     if ($password !== $confirm_password) {
-        $_SESSION['status'] = "Password do not match. Please try again.";
+        $_SESSION['auth_status'] = "Password do not match. Please try again.";
         header('Location: signupform.php?error=Password do not match. Please try again.');
         exit(0);
     }
     
     // Validate phone number format
     if (!preg_match("/^\+\d{1,3}\d{4,14}$/", $phone_number)) {
-        $_SESSION['status'] = "Invalid phone number format.";
+        $_SESSION['auth_status'] = "Invalid phone number format.";
         header("Location: signupform.php?error=Invalid phone number format");
         exit();
     }
 
     // Validate password format
     if (!preg_match("/(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{5,}/", $password)) {
-        $_SESSION['status'] = "Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 5 characters long.";
+        $_SESSION['auth_status'] = "Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 5 characters long.";
         header("Location: signupform.php?error=Invalid password format");
         exit();
     }
@@ -76,7 +76,7 @@ if (isset($_POST['signup_btn'])) {
 
     // Check if age is less than 14
     if ($age < 14) {
-        $_SESSION['status'] = "You must be at least 14 years old to register.";
+        $_SESSION['auth_status'] = "You must be at least 14 years old to register.";
         header("Location: signupform.php?error=You must be at least 14 years old to register.");
         exit();
     } else {
@@ -102,7 +102,7 @@ if (isset($_POST['signup_btn'])) {
                 $stmt = $conn->prepare($instructor_sql);
                 $stmt->bind_param("isssissss", $user_id, $profile_picture, $full_name, $birthdateStr, $age, $gender, $email, $phone_number, $address);
             } else {
-                $_SESSION['status'] = "Please select your role properly.";
+                $_SESSION['auth_status'] = "Please select your role properly.";
                 header("Location: signupform.php?error=Please select your role properly.");
                 exit();
             }
@@ -143,7 +143,7 @@ if (isset($_POST['signup_btn'])) {
                     exit();
                 } catch (Exception $e) {
                     // Display an error message if the verification email could not be sent
-                    $_SESSION['status'] = "Verification email could not be sent. Please try again later.";
+                    $_SESSION['auth_status'] = "Verification email could not be sent. Please try again later.";
                     header("Location: signupform.php?error=Verification email could not be sent. Please try again later.");
                     exit();
                 }
