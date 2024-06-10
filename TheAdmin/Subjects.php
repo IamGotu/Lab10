@@ -119,6 +119,10 @@ include('sidebar.php');
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
+ 
+<?php
+  include ('../includes/message.php');
+?>
 
     <!-- Main content -->
 <section class="content">
