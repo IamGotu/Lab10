@@ -88,10 +88,10 @@
     <h2>5. Governing Law</h2>
     <p>These terms and conditions are governed by and construed in accordance with the laws of the Philippines, and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.</p>
 
-    <!-- Button to go back to admin_Home.php -->
+    <!-- Button to go back to Dashboard.php -->
     <div style="text-align: center;">
-        <a href="../TheAdmin/admin_Home.php" class="btn">Accept</a>
-        <a href="../TheAdmin/admin_Home.php" class="btn">Decline (Back to home)</a>
+        <a href="../TheAdmin/Dashboard.php" class="btn">Accept</a>
+        <a href="../TheAdmin/Dashboard.php" class="btn">Decline (Back to home)</a>
     </div>
 </div>
 </body>

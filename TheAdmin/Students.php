@@ -183,7 +183,7 @@ include('sidebar.php');
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="admin_Home.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="Dashboard.php">Home</a></li>
           <li class="breadcrumb-item active">Students</li>
         </ol>
       </div><!-- /.col -->
