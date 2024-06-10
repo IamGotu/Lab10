@@ -75,11 +75,11 @@
 
                             <div class="form-group">
                                 <label for="role">Choose A Role:</label>
-                                        <select name="role" id="role">
-                                            <option value="student">STUDENT</option>
-                                            <option value="instructor">INSTRUCTOR</option>
-                                            <option value="admin">ADMIN</option>
-                                        </select>
+                                    <select name="role" id="role">
+                                        <option value="student">STUDENT</option>
+                                        <option value="instructor">INSTRUCTOR</option>
+                                        <option value="admin">ADMIN</option>
+                                    </select>
                             </div>
 
                             <div class="form-group">
