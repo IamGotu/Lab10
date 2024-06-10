@@ -50,7 +50,7 @@ include('sidebar.php');
               <div class="icon">
                 <i class="fas fa-chalkboard-teacher"></i>
               </div>
-              <a href="../TheTeachers/instructors.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheInstructors/Instructors.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -64,7 +64,7 @@ include('sidebar.php');
               <div class="icon">
                 <i class="fas fa-user-graduate"></i>
               </div>
-              <a href="../TheTeachers/Students.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheInstructors/Students.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -73,12 +73,12 @@ include('sidebar.php');
             <div class="small-box bg-warning">
               <div class="inner">
                 <h3></h3>
-                <p>Enroll Subjects</p>
+                <p>Assessments</p>
               </div>
               <div class="icon">
                 <i class="fas fa-clipboard-check"></i>
               </div>
-              <a href="../TheTeachers/enroll_Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheInstructors/Assessments.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -92,7 +92,7 @@ include('sidebar.php');
               <div class="icon">
                 <i class="fas fa-book"></i>
               </div>
-              <a href="../TheTeachers/Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="../TheInstructors/Subjects.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           

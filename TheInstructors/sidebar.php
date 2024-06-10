@@ -56,7 +56,7 @@ $user_details = $_SESSION['user_details'];
                 </li>
 
                 <li class="nav-item">
-                    <a href="../TheTeachers/instructors.php" class="nav-link">
+                    <a href="../TheInstructors/Instructors.php" class="nav-link">
                         <i class="nav-icon far fa-user"></i>
                         <p>
                             Instructors
@@ -64,7 +64,7 @@ $user_details = $_SESSION['user_details'];
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheTeachers/Students.php" class="nav-link">
+                    <a href="../TheInstructors/Students.php" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
                             Students
@@ -72,7 +72,7 @@ $user_details = $_SESSION['user_details'];
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheTeachers/Subjects.php" class="nav-link">
+                    <a href="../TheInstructors/Subjects.php" class="nav-link">
                         <i class="nav-icon fa fa-book"></i>
                         <p>
                             Subjects
@@ -80,7 +80,7 @@ $user_details = $_SESSION['user_details'];
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheTeachers/Assessments.php" class="nav-link">
+                    <a href="../TheInstructors/Assessments.php" class="nav-link">
                         <i class="nav-icon fa fa-tasks"></i>
                         <p>
                             Assessments
