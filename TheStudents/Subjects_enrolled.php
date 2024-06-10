@@ -2,9 +2,19 @@
 session_start();
 
 // Check if user is not logged in
-if (!isset($_SESSION['auth'])) {
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
     $_SESSION['auth_status'] = "You need to be logged in to access this page";
     header('Location: ../loginform.php');
+    exit();
+}
+
+// Specificaly admin access only
+$required_role = 'student';
+
+// Check if the user has the required role
+if ($_SESSION['role'] !== $required_role) {
+    $_SESSION['auth_status'] = "You do not have permission to access this page";
+    header('Location: Dashboard.php');
     exit();
 }
 
@@ -24,7 +34,7 @@ include('sidebar.php');
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">Enrolled Subjects</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -36,6 +46,10 @@ include('sidebar.php');
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+
+    <?php
+        include ('../includes/message.php');
+    ?>
 
     <!-- Main content -->
     <section class="content">
@@ -50,7 +64,7 @@ include('sidebar.php');
                     ?>
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Enroll Subjects</h3>
+                            <h3 class="card-title">Enrolled Subjects</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -65,7 +79,7 @@ include('sidebar.php');
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = "SELECT student_id, full_name, course, subjects FROM student_list";
+                                    $query = "SELECT student_id, full_name, course, subjects FROM students";
                                     $run_query = mysqli_query($conn, $query);
                                     if ($run_query) {
                                         if(mysqli_num_rows($run_query) > 0) {
