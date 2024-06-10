@@ -137,13 +137,13 @@ if (isset($_POST['login_btn'])) {
                 // Redirect based on role
                 switch ($role) {
                     case 'admin':
-                        header('Location: ../TheAdmin/admin_Home.php');
+                        header('Location: ../TheAdmin/Dashboard.php');
                         break;
                     case 'instructor':
-                        header('Location: ../TheTeachers/teachers_Home.php');
+                        header('Location: ../TheInstructors/Dashboard.php');
                         break;
                     case 'student':
-                        header('Location: ../TheStudents/student_Home.php');
+                        header('Location: ../TheStudents/Dashboard.php');
                         break;
                     default:
                         $_SESSION['auth_status'] = "Unknown role.";
