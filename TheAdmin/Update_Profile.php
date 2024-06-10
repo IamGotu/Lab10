@@ -1,8 +1,8 @@
-<?php 
+<?php
+session_start();
+
 // Include file for database connection
-include('config/db_conn.php');
-// Include file for authentication
-include('Authentication.php');
+include('../database/db_conn.php');
 
 // Validation function to sanitize input data
 function validate($data) {
@@ -13,7 +13,7 @@ function validate($data) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user_id = isset($_POST['user_id']) ? validate($_POST['user_id']) : null;
+    $user_id = isset($_POST['admin_id']) ? validate($_POST['admin_id']) : null;
 
     switch (true) {
         case isset($_POST['UpdatePicture']):
@@ -27,13 +27,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit(0);
             }
 
-            $update_sql = "UPDATE user_profile SET profile_picture = ? WHERE user_id = ?";
+            $update_sql = "UPDATE admin SET profile_picture = ? WHERE admin_id = ?";
             $stmt = $conn->prepare($update_sql);
             $stmt->bind_param("si", $profile_picture, $user_id);
-
+        
             if ($stmt->execute()) {
-                move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'uploads/'.$profile_picture);
+                move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'assets/dist/img/'.$profile_picture);
+        
+                // Fetch the updated user details
+                $fetch_sql = "SELECT * FROM admin WHERE admin_id = ?";
+                $fetch_stmt = $conn->prepare($fetch_sql);
+                $fetch_stmt->bind_param("i", $user_id);
+                $fetch_stmt->execute();
+                $result = $fetch_stmt->get_result();
+                $updatedUserDetails = $result->fetch_assoc();
+        
+                // Update the session with the new user details
+                $_SESSION['user_details'] = $updatedUserDetails;
                 $_SESSION['auth_status'] = "Profile Update Successfully";
+        
                 header('Location: User_Profile.php');
                 exit(0);
             } else {
@@ -48,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $phone_number = validate($_POST['phone_number']);
             $address = validate($_POST['address']);
 
-            $update_sql = "UPDATE user_profile SET full_name = ?, phone_number = ?, address = ? WHERE user_id = ?";
+            $update_sql = "UPDATE admin SET full_name = ?, phone_number = ?, address = ? WHERE user_id = ?";
             $stmt = $conn->prepare($update_sql);
             $stmt->bind_param("sssi", $full_name, $phone_number, $address, $user_id);
 
