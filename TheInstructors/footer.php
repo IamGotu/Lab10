@@ -25,9 +25,9 @@
 </html>
     <div class="float-right">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="../TheTeachers/terms.php">Terms of Service</a></li>
-            <li class="list-inline-item"><a href="../TheTeachers/cookie.php">Cookie Notice</a></li>
-            <li class="list-inline-item"><a href="../TheTeachers/privacy.php">Privacy Policy</a></li>
+            <li class="list-inline-item"><a href="../TheInstructors/terms.php">Terms of Service</a></li>
+            <li class="list-inline-item"><a href="../TheInstructors/cookie.php">Cookie Notice</a></li>
+            <li class="list-inline-item"><a href="../TheInstructors/privacy.php">Privacy Policy</a></li>
             <li class="list-inline-item">Creators:
                 <a href="https://www.facebook.com/Russellxd.newbie">Russell</a>,
                 <a href="https://www.facebook.com/ken.bacaresas">Kenneth</a>,
