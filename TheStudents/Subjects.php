@@ -8,14 +8,14 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
   exit();
 }
 
-// Specificaly student access only
+// Specifically student access only
 $required_role = 'student';
 
 // Check if the user has the required role
 if ($_SESSION['role'] !== $required_role) {
-    $_SESSION['auth_status'] = "You do not have permission to access this page";
-    header('Location: Dashboard.php');
-    exit();
+  $_SESSION['auth_status'] = "You do not have permission to access this page";
+  header('Location: Dashboard.php');
+  exit();
 }
 
 // Include necessary files
@@ -27,112 +27,64 @@ include('sidebar.php');
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Subjects</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="Dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Subjects</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-
-<?php
-  include ('../includes/message.php');
-?>
-
-    <!-- Main content -->
-<section class="content">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
     <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <?php   
-            if (isset($_SESSION['status'])) {
-              echo "<h4>".$_SESSION['status']."</h4>" ;
-              unset($_SESSION['status']);
-            }
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Subjects</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="Dashboard.php">Home</a></li>
+            <li class="breadcrumb-item active">Subjects</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div><!-- /.content-header -->
 
-            ?>
+<?php include('../includes/message.php'); ?>
 
-            <!-- /.card-header -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
             <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Course</th>
-                            <th>Credit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      <?php 
-                      // Hardcoded subject data
-                      $subjects = array(
-                          array("BIO-101", "Intro. to Biology", "Biology", 4),
-                          array("BIO-301", "Genetics", "Biology", 4),
-                          array("BIO-399", "Computational Biology", "Biology", 3),
-                          array("CS-101", "Intro. to Computer Science", "Comp. Sci.", 4),
-                          array("CS-190", "Game Design", "Comp. Sci.", 4),
-                          array("CS-315", "Robotics", "Comp. Sci.", 3),
-                          array("CS-319", "Image Processing", "Comp. Sci.", 3),
-                          array("CS-347", "Database System Concepts", "Comp. Sci.", 3),
-                          array("EE-181", "Intro. to Digital Systems", "Elec. Eng.", 3),
-                          array("FIN-201", "Investment Banking", "Finance", 3),
-                          array("HIS-351", "World History", "History", 3),
-                          array("MU-199", "Music Video Production", "Music", 3),
-                          array("PHY-101", "Physical Principles", "Physics", 4)
-                      );
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Credit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  // Fetch subjects from database
+                  $query = "SELECT * FROM subjects";
+                  $result = mysqli_query($conn, $query);
 
-                      // Display subjects
-                      foreach ($subjects as $subject) {
-                          echo "<tr>";
-                          echo "<td>" . $subject[0] . "</td>";
-                          echo "<td>" . $subject[1] . "</td>";
-                          echo "<td>" . $subject[2] . "</td>";
-                          echo "<td>" . $subject[3] . "</td>";
-                          echo "</tr>";
-                      }
-                      ?>
-                        
-                    </tbody>
-                </table>
-               </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
+                  // Display subjects
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>" . $row['subject_id'] . "</td>";
+                    echo "<td>" . $row['title'] . "</td>";
+                    echo "<td>" . $row['credits'] . "</td>";
+                    echo "</tr>";
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div><!-- /.card-body -->
+          </div><!-- /.card -->
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
 
-</div>
-
-<?php 
-include("../includes/script.php");
-?>
-
-<script>
-  $(document).ready(function () {
-    $('.deletebtn').click(function (e){
-      e.preventDefault()
-
-      var user_id = $(this).val();
-      //console.log(user_id);
-      $('.delete_user_id').val(user_id);
-      $('#DeleteModal').modal('show');
-
-    });
-  });
-</script>
-
-<?php 
-include("footer.php");
-?>
+<?php include("../includes/script.php"); ?>
+<?php include("footer.php"); ?>
