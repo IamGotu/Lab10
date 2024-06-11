@@ -66,7 +66,7 @@ include('sidebar.php');
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
-                            <th>Department</th>
+                            <th>Course</th>
                             <th>Credit</th>
                         </tr>
                     </thead>
