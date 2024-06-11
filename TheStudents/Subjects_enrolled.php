@@ -73,13 +73,12 @@ include('sidebar.php');
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Course</th>
                                         <th>Subjects Enrolled</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = "SELECT student_id, full_name, course, subjects FROM students";
+                                    $query = "SELECT student_id, full_name, subjects FROM students";
                                     $run_query = mysqli_query($conn, $query);
                                     if ($run_query) {
                                         if(mysqli_num_rows($run_query) > 0) {
@@ -88,7 +87,6 @@ include('sidebar.php');
                                                 <tr>
                                                     <td><?php echo $row['student_id'] ?></td>
                                                     <td><?php echo $row['full_name'] ?></td>
-                                                    <td><?php echo $row['course'] ?></td>
                                                     <td>
                                                         <?php
                                                         if ($row['subjects']) {
