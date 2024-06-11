@@ -1,3 +1,23 @@
+<?php
+session_start();
+
+// Check if user is not logged in
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
+  $_SESSION['auth_status'] = "You need to be logged in to access this page";
+  header('Location: ../loginform.php');
+  exit();
+}
+
+// Specificaly instructor access only
+$required_role = 'instructor';
+
+// Check if the user has the required role
+if ($_SESSION['role'] !== $required_role) {
+    $_SESSION['auth_status'] = "You do not have permission to access this page";
+    header('Location: Dashboard.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +35,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 150vh;
         }
 
         .container {
@@ -97,7 +117,8 @@
     
     <!-- Button to go back to Dashboard.php -->
     <div style="text-align: center;">
-        <a href="../TheInstructors/Dashboard.php" class="btn">Back to Home</a>
+        <a href="../TheInstructors/Dashboard.php" class="btn">Accept</a>
+        <a href="../logout.php" class="btn">Decline (Logout)</a>
     </div>
 </div>
 
