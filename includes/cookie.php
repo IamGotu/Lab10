@@ -73,8 +73,8 @@
     <p>You can control and/or delete cookies as you wish. You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed. If you do this, however, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.</p>
 
     <div style="text-align: center;">
-        <a href="..loginform.php" class="btn">Login</a>
-        <a href="..loginform.php" class="btn">Create Account</a>
+        <a href="../loginform.php" class="btn">Login</a>
+        <a href="../signupform.php" class="btn">Create Account</a>
     </div>
 </div>
 

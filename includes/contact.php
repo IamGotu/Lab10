@@ -110,7 +110,7 @@
 <div class="container">
     <h1>Contact</h1>
     <div class="contact-info">
-        <img src="assets/dist/img/rus.jpg" alt="Logo">
+        <img src="../assets/dist/img/rus.jpg" alt="Logo">
         <div class="contact-info-details">
             <h3>Russell B. Osias</h3>
             <p>Email: osiasrussell@gmail.com</p>
@@ -119,7 +119,7 @@
         </div>
     </div>
     <div class="contact-info">
-        <img src="assets/dist/img/ken.jpg" alt="Logo">
+        <img src="../assets/dist/img/ken.jpg" alt="Logo">
         <div class="contact-info-details">
             <h3>Kenneth Bacaresas</h3>
             <p>Email: ken.ae26@gmail.com</p>
@@ -128,7 +128,7 @@
         </div>
     </div>
     <div class="contact-info">
-        <img src="assets/dist/img/s.jpg" alt="Logo">
+        <img src="../assets/dist/img/s.jpg" alt="Logo">
         <div class="contact-info-details">
             <h3>Mark John Jopia</h3>
             <p>Email: markjohnjopia1@gmail.com</p>
@@ -138,8 +138,8 @@
     </div>
     <p style="text-align: center; margin-bottom: 20px;">For any inquiries or issues regarding the website, please feel free to contact any of the creators.</p>
     <div style="text-align: center;">
-        <a href="..loginform.php" class="btn">Login</a>
-        <a href="..loginform.php" class="btn">Create Account</a>
+        <a href="../loginform.php" class="btn">Login</a>
+        <a href="../signupform.php" class="btn">Create Account</a>
     </div>
 </div>
 

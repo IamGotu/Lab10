@@ -97,8 +97,8 @@
     
     <!-- Button to go back to Dashboard.php -->
     <div style="text-align: center;">
-        <a href="..loginform.php" class="btn">Login</a>
-        <a href="..loginform.php" class="btn">Create Account</a>
+        <a href="../loginform.php" class="btn">Login</a>
+        <a href="../signupform.php" class="btn">Create Account</a>
     </div>
 </div>
 
