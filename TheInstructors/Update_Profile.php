@@ -16,7 +16,7 @@ function validate($data) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $student_id = isset($_POST['student_id']) ? validate($_POST['student_id']) : null;
+    $instructor_id = isset($_POST['instructor_id']) ? validate($_POST['instructor_id']) : null;
 
     switch (true) {
         case isset($_POST['UpdatePicture']):
@@ -30,17 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit(0);
             }
 
-            $update_sql = "UPDATE students SET profile_picture = ? WHERE student_id = ?";
+            $update_sql = "UPDATE instructors SET profile_picture = ? WHERE instructor_id = ?";
             $stmt = $conn->prepare($update_sql);
-            $stmt->bind_param("si", $profile_picture, $student_id);
+            $stmt->bind_param("si", $profile_picture, $instructor_id);
         
             if ($stmt->execute()) {
                 move_uploaded_file($_FILES['profile_picture']['tmp_name'], 'assets/dist/img/'.$profile_picture);
         
                 // Fetch the updated profile picture
-                $fetch_sql = "SELECT * FROM students WHERE student_id = ?";
+                $fetch_sql = "SELECT * FROM instructors WHERE instructor_id = ?";
                 $fetch_stmt = $conn->prepare($fetch_sql);
-                $fetch_stmt->bind_param("i", $student_id);
+                $fetch_stmt->bind_param("i", $instructor_id);
                 $fetch_stmt->execute();
                 $result = $fetch_stmt->get_result();
                 $updatedUserDetails = $result->fetch_assoc();
@@ -64,16 +64,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $phone_number = validate($_POST['phone_number']);
             $address = validate($_POST['address']);
 
-            $update_sql = "UPDATE students SET full_name = ?, gender = ?, phone_number = ?, address = ? WHERE student_id = ?";
+            $update_sql = "UPDATE instructors SET full_name = ?, gender = ?, phone_number = ?, address = ? WHERE instructor_id = ?";
             $stmt = $conn->prepare($update_sql);
-            $stmt->bind_param("ssssi", $full_name, $gender, $phone_number, $address, $student_id);
+            $stmt->bind_param("ssssi", $full_name, $gender, $phone_number, $address, $instructor_id);
 
             if ($stmt->execute()) {
 
                 // Fetch the updated user details
-                $fetch_sql = "SELECT * FROM students WHERE student_id = ?";
+                $fetch_sql = "SELECT * FROM instructors WHERE instructor_id = ?";
                 $fetch_stmt = $conn->prepare($fetch_sql);
-                $fetch_stmt->bind_param("i", $student_id);
+                $fetch_stmt->bind_param("i", $instructor_id);
                 $fetch_stmt->execute();
                 $result = $fetch_stmt->get_result();
                 $updatedUserDetails = $result->fetch_assoc();
@@ -102,16 +102,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             } else {
                 $birthdateStr = $birthday->format('Y-m-d');
-                $update_sql = "UPDATE students SET birthdate = ?, age = ? WHERE student_id = ?";
+                $update_sql = "UPDATE instructors SET birthdate = ?, age = ? WHERE instructor_id = ?";
                 $stmt = $conn->prepare($update_sql);
-                $stmt->bind_param("sii", $birthdateStr, $age, $student_id);
+                $stmt->bind_param("sii", $birthdateStr, $age, $instructor_id);
 
                 if ($stmt->execute()) {
 
                     // Fetch the updated user details
-                    $fetch_sql = "SELECT * FROM students WHERE student_id = ?";
+                    $fetch_sql = "SELECT * FROM instructors WHERE instructor_id = ?";
                     $fetch_stmt = $conn->prepare($fetch_sql);
-                    $fetch_stmt->bind_param("i", $student_id);
+                    $fetch_stmt->bind_param("i", $instructor_id);
                     $fetch_stmt->execute();
                     $result = $fetch_stmt->get_result();
                     $updatedUserDetails = $result->fetch_assoc();
@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit(0);
                 }
         
-                // Update the password in the users table where user_id = student_id
+                // Update the password in the users table where user_id = instructor_id
                 $update_sql = "UPDATE users SET password = ? WHERE user_id = ?";
                 $stmt = $conn->prepare($update_sql);
     
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit(0);
                 }
     
-                $stmt->bind_param("si", $new_password, $student_id);
+                $stmt->bind_param("si", $new_password, $instructor_id);
     
                 if ($stmt->execute()) {
                     $_SESSION['auth_status'] = "Password Updated Successfully";

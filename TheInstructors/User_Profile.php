@@ -10,8 +10,8 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
 
 $user_details = $_SESSION['user_details'];
 
-// Specificaly admin access only
-$required_role = 'student';
+// Specificaly instructor access only
+$required_role = 'instructor';
 
 // Check if the user has the required role
 if ($_SESSION['role'] !== $required_role) {
@@ -115,7 +115,7 @@ include('../database/db_conn.php');
                         
                         <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
 
-                            <input type="hidden" id="student_id" name="student_id" class="form-control" value="<?php echo $user_details['student_id'] ?>" required>
+                            <input type="hidden" id="instructor_id" name="instructor_id" class="form-control" value="<?php echo $user_details['instructor_id'] ?>" required>
             
                             <div class="form-group">
                                 <label for="profile_picture">Profile Picture</label>
@@ -141,7 +141,7 @@ include('../database/db_conn.php');
 
                     <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
 
-                        <input type="hidden" id="student_id" name="student_id" value="<?php echo $user_details['student_id'] ?>">
+                        <input type="hidden" id="instructor_id" name="instructor_id" value="<?php echo $user_details['instructor_id'] ?>">
 
                         <div class="form-group">
                             <label for="full_name">Full Name</label>
@@ -188,7 +188,7 @@ include('../database/db_conn.php');
                     <div class="card-body">
                         
                         <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" id="student_id" name="student_id" class="form-control" value="<?php echo $user_details['student_id'] ?>" required>
+                            <input type="hidden" id="instructor_id" name="instructor_id" class="form-control" value="<?php echo $user_details['instructor_id'] ?>" required>
 
                             <div class="form-group">
                                 <label for="">Birthdate</label>
@@ -214,7 +214,7 @@ include('../database/db_conn.php');
                             <div class="card-body">
 
                                 <form action="Update_Profile.php" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="student_id" name="student_id" class="form-control" value="<?php echo $user_details['student_id'] ?>">
+                                    <input type="hidden" id="instructor_id" name="instructor_id" class="form-control" value="<?php echo $user_details['instructor_id'] ?>">
 
                                     <div class="col-md">
                                         <div class="form-group">
