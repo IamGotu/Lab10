@@ -25,7 +25,7 @@ include('topbar.php');
 include('sidebar.php');
 
 // Fetch all assessments
-$query = "SELECT id, title, description, created_at FROM assessments";
+$query = "SELECT id, title, description, subject_id, created_at FROM assessments";
 $result = $conn->query($query);
 
 // Fetch student ID from session
@@ -83,11 +83,12 @@ $submitted_ids = array_column($submitted_assessments, 'assessment_id');
                   <li>
                     <h2><?php echo htmlspecialchars($row['title']); ?></h2>
                     <p><?php echo htmlspecialchars($row['description']); ?></p>
+                    <p><?php echo htmlspecialchars($row['subject_id']); ?></p>
                     <p><small>Created at: <?php echo htmlspecialchars($row['created_at']); ?></small></p>
                     <?php if ($is_submitted): ?>
                       <p><strong>Status:</strong> Already Submitted</p>
                     <?php else: ?>
-                      <a href="Assessments_Code.php?assessment_id=<?php echo $row['id']; ?>">Submit Activity</a>
+                      <a href="Assessments_Code.php?assessment_id=<?php echo $row['id']; ?>">Submit Activity<br></a>
                     <?php endif; ?>
                   </li>
                 <?php endwhile; ?>

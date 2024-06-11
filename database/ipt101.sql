@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2024 at 11:21 AM
+-- Generation Time: Jun 11, 2024 at 08:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -60,39 +60,19 @@ CREATE TABLE `assessments` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `subject_id` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `assessments`
 --
 
-INSERT INTO `assessments` (`id`, `title`, `description`, `created_at`) VALUES
-(1, 'Activity 1', 'Submit a file', '2024-06-11 07:44:04'),
-(2, 'Activity 2', 'Submit a File', '2024-06-11 07:47:38');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course`
---
-
-CREATE TABLE `course` (
-  `course_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `course`
---
-
-INSERT INTO `course` (`course_name`) VALUES
-('Biology'),
-('Comp. Sci.'),
-('Elec. Eng.'),
-('Finance'),
-('History'),
-('Music'),
-('Physics');
+INSERT INTO `assessments` (`id`, `title`, `description`, `subject_id`, `created_at`, `created_by`) VALUES
+(11, 'Act 1', 'Research', '0', '2024-06-11 18:45:35', 0),
+(12, 'Act1', 'adsasd', '0', '2024-06-11 18:46:18', 0),
+(13, 'ads', 'asd', '0', '2024-06-11 18:49:18', 0);
 
 -- --------------------------------------------------------
 
@@ -138,18 +118,18 @@ CREATE TABLE `students` (
   `email` varchar(100) NOT NULL,
   `phone_number` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `course` varchar(100) NOT NULL,
-  `subjects` varchar(100) NOT NULL
+  `subjects` varchar(100) NOT NULL,
+  `total_credits` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `student_id`, `profile_picture`, `full_name`, `birthdate`, `age`, `gender`, `email`, `phone_number`, `address`, `course`, `subjects`) VALUES
-(0, 2, 'user.png', 'std1', '2003-02-04', 21, 'MALE', 'std1@gmail.com', '+639123456789', 'Sinawal', '', ''),
-(1, 3, 'user.png', 'std2', '2010-06-08', 14, 'FEMALE', 'std2@gmail.com', '+639514810354', 'Sinawal GSC', '', ''),
-(10, 5, 'user.png', 'std3', '2001-03-06', 23, 'FEMALE', 'std3@gmail.com', '+639514810354', 'Davao', '', '');
+INSERT INTO `students` (`id`, `student_id`, `profile_picture`, `full_name`, `birthdate`, `age`, `gender`, `email`, `phone_number`, `address`, `subjects`, `total_credits`) VALUES
+(0, 2, 'user.png', 'std1', '2003-02-04', 21, 'MALE', 'std1@gmail.com', '+639123456789', 'Sinawal', ', BIO-101', 4),
+(1, 3, 'user.png', 'std2', '2010-06-08', 14, 'FEMALE', 'std2@gmail.com', '+639514810354', 'Sinawal GSC', ', BIO-301', 4),
+(10, 5, 'user.png', 'std3', '2001-03-06', 23, 'FEMALE', 'std3@gmail.com', '+639514810354', 'Davao', ', BIO-399', 3);
 
 -- --------------------------------------------------------
 
@@ -160,7 +140,6 @@ INSERT INTO `students` (`id`, `student_id`, `profile_picture`, `full_name`, `bir
 CREATE TABLE `subjects` (
   `subject_id` varchar(100) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `dept_name` varchar(100) NOT NULL,
   `credits` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -168,20 +147,20 @@ CREATE TABLE `subjects` (
 -- Dumping data for table `subjects`
 --
 
-INSERT INTO `subjects` (`subject_id`, `title`, `dept_name`, `credits`) VALUES
-('BIO-101', 'Intro. to Biology', 'Biology', 4),
-('BIO-301', 'Genetics', 'Biology', 4),
-('BIO-399', 'Computational Biology', 'Biology', 3),
-('CS-101', 'Intro. to Computer Science', 'Comp. Sci.', 4),
-('CS-190', 'Game Design', 'Comp. Sci.', 4),
-('CS-315', 'Robotics', 'Comp. Sci.', 3),
-('CS-319', 'Image Processing', 'Comp. Sci.', 3),
-('CS-347', 'Database System Concepts', 'Comp. Sci.', 3),
-('EE-181', 'Intro. to Digital Systems', 'Elec. Eng.', 3),
-('FIN-201', 'Investment Banking', 'Finance', 3),
-('HIS-351', 'World History', 'History', 3),
-('MU-199', 'Music Video Production', 'Music', 3),
-('PHY-101', 'Physical Principles', 'Physics', 4);
+INSERT INTO `subjects` (`subject_id`, `title`, `credits`) VALUES
+('BIO-101', 'Intro. to Biology', 4),
+('BIO-301', 'Genetics', 4),
+('BIO-399', 'Computational Biology', 3),
+('CS-101', 'Intro. to Computer Science', 4),
+('CS-190', 'Game Design', 4),
+('CS-315', 'Robotics', 3),
+('CS-319', 'Image Processing', 3),
+('CS-347', 'Database System Concepts', 3),
+('EE-181', 'Intro. to Digital Systems', 3),
+('FIN-201', 'Investment Banking', 3),
+('HIS-351', 'World History', 3),
+('MU-199', 'Music Video Production', 3),
+('PHY-101', 'Physical Principles', 4);
 
 -- --------------------------------------------------------
 
@@ -197,15 +176,6 @@ CREATE TABLE `submissions` (
   `submitted_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `grade` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `submissions`
---
-
-INSERT INTO `submissions` (`id`, `assessment_id`, `student_id`, `submission_file`, `submitted_at`, `grade`) VALUES
-(4, 1, 2, '../SubmittedFile/Doc1.pdf', '2024-06-11 08:45:23', 0.00),
-(5, 1, 2, '../SubmittedFile/Doc1.pdf', '2024-06-11 08:46:05', 0.00),
-(6, 1, 2, '../SubmittedFile/Doc1.pdf', '2024-06-11 08:52:17', 0.00);
 
 -- --------------------------------------------------------
 
@@ -255,12 +225,6 @@ ALTER TABLE `assessments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `course`
---
-ALTER TABLE `course`
-  ADD PRIMARY KEY (`course_name`);
-
---
 -- Indexes for table `instructors`
 --
 ALTER TABLE `instructors`
@@ -287,7 +251,8 @@ ALTER TABLE `subjects`
 --
 ALTER TABLE `submissions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `assessment_id` (`assessment_id`);
+  ADD KEY `assessment_id` (`assessment_id`),
+  ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `users`
@@ -310,7 +275,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `assessments`
 --
 ALTER TABLE `assessments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `instructors`
@@ -334,7 +299,7 @@ ALTER TABLE `submissions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -365,7 +330,8 @@ ALTER TABLE `students`
 -- Constraints for table `submissions`
 --
 ALTER TABLE `submissions`
-  ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`assessment_id`) REFERENCES `assessments` (`id`);
+  ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`assessment_id`) REFERENCES `assessments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `submissions_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
