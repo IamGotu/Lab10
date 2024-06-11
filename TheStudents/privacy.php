@@ -8,17 +8,16 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
   exit();
 }
 
-// Specificaly admin access only
+// Specificaly student access only
 $required_role = 'student';
 
 // Check if the user has the required role
 if ($_SESSION['role'] !== $required_role) {
     $_SESSION['auth_status'] = "You do not have permission to access this page";
-    header('Location: Dashboard.php');
+    header('Location: ../logout.php');
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +35,7 @@ if ($_SESSION['role'] !== $required_role) {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 150vh;
         }
 
         .container {
@@ -118,7 +117,8 @@ if ($_SESSION['role'] !== $required_role) {
     
     <!-- Button to go back to Dashboard.php -->
     <div style="text-align: center;">
-        <a href="../TheStudents/Dashboard" class="btn">Back to Home</a>
+        <a href="../TheStudents/Dashboard.php" class="btn">Accept</a>
+        <a href="../logout.php" class="btn">Decline (Logout)</a>
     </div>
 </div>
 

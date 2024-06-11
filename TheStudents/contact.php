@@ -8,13 +8,13 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
   exit();
 }
 
-// Specificaly admin access only
+// Specificaly student access only
 $required_role = 'student';
 
 // Check if the user has the required role
 if ($_SESSION['role'] !== $required_role) {
     $_SESSION['auth_status'] = "You do not have permission to access this page";
-    header('Location: Dashboard.php');
+    header('Location: ../logout.php');
     exit();
 }
 ?>
@@ -36,7 +36,7 @@ if ($_SESSION['role'] !== $required_role) {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 150vh;
         }
 
         .container {
