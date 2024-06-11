@@ -7,6 +7,16 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
 }
 
 $user_details = $_SESSION['user_details'];
+
+// Specificaly admin access only
+$required_role = 'admin';
+
+// Check if the user has the required role
+if ($_SESSION['role'] !== $required_role) {
+    $_SESSION['auth_status'] = "You do not have permission to access this page";
+    header('Location: ../logout.php');
+    exit();
+}
 ?>
 
 <!-- Main Sidebar Container -->
