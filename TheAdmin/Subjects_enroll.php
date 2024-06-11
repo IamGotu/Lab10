@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 
 // Check if user is not logged in
@@ -8,7 +9,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
     exit();
 }
 
-// Specificaly admin access only
+// Specifically admin access only
 $required_role = 'admin';
 
 // Check if the user has the required role
@@ -23,8 +24,135 @@ include('../database/db_conn.php');
 include('../includes/header.php');
 include('topbar.php');
 include('sidebar.php');
-?>
 
+// Function to calculate total credits for a student
+function calculateTotalCredits($enrolled_subjects, $conn) {
+    $total_credits = 0;
+    foreach ($enrolled_subjects as $subject) {
+        // Query the subjects table to get the credits for each enrolled subject
+        $query = "SELECT credits FROM subjects WHERE subject_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $subject);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $total_credits += $row['credits'];
+        }
+    }
+    return $total_credits;
+}
+
+// Function to update total credits for a student
+function updateTotalCredits($student_id, $conn) {
+    $query = "SELECT subjects FROM students WHERE student_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $enrolled_subjects = explode(', ', $row['subjects']);
+        $total_credits = calculateTotalCredits($enrolled_subjects, $conn);
+        
+        // Update the total credits for the student
+        $update_query = "UPDATE students SET total_credits = ? WHERE student_id = ?";
+        $update_stmt = $conn->prepare($update_query);
+        $update_stmt->bind_param("di", $total_credits, $student_id);
+        return $update_stmt->execute();
+    }
+    return false;
+}
+
+// Function to remove all subjects from a student
+function removeAllSubjects($student_id, $conn) {
+    $update_query = "UPDATE students SET subjects = '', total_credits = 0 WHERE student_id = ?";
+    $update_stmt = $conn->prepare($update_query);
+    $update_stmt->bind_param("i", $student_id);
+    return $update_stmt->execute();
+}
+
+// Check if the form is submitted to add a subject
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_subject_btn'])) {
+    $student_id = $_POST['student_id'];
+    $subject_id = $_POST['subject_id'];
+    
+    // Fetch the current subjects enrolled by the student
+    $query = "SELECT subjects, total_credits FROM students WHERE student_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $enrolled_subjects = explode(', ', $row['subjects']);
+        $total_credits = $row['total_credits'];
+        
+        // Check if the subject is already enrolled by the student
+        if (in_array($subject_id, $enrolled_subjects)) {
+            $_SESSION['auth_status'] = "Subject already enrolled!";
+        } else {
+            // Fetch the credits of the subject to be enrolled
+            $query = "SELECT credits FROM subjects WHERE subject_id = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("s", $subject_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $subject_credits = $row['credits'];
+                
+                // Check if enrolling the subject exceeds maximum credits
+                if ($total_credits >= 18) {
+                    $_SESSION['auth_status'] = "Cannot enroll in more subjects. Total credits limit reached!";
+                } elseif (($total_credits + $subject_credits) > 20) {
+                    $_SESSION['auth_status'] = "Maximum credits limit exceeded!";
+                } else {
+                    // Enroll the subject
+                    $enrolled_subjects[] = $subject_id;
+                    $enrolled_subjects_str = implode(', ', $enrolled_subjects);
+                    
+                    // Update the subjects for the student
+                    $update_query = "UPDATE students SET subjects = ? WHERE student_id = ?";
+                    $update_stmt = $conn->prepare($update_query);
+                    $update_stmt->bind_param("si", $enrolled_subjects_str, $student_id);
+                    if ($update_stmt->execute()) {
+                        // Update total credits
+                        if (updateTotalCredits($student_id, $conn)) {
+                            $_SESSION['auth_status'] = "Subject enrolled successfully!";
+                        } else {
+                            $_SESSION['auth_status'] = "Failed to update total credits!";
+                        }
+                    } else {
+                        $_SESSION['auth_status'] = "Failed to enroll subject!";
+                    }
+                }
+            } else {
+                $_SESSION['auth_status'] = "Subject not found!";
+            }
+        }
+    } else {
+        $_SESSION['auth_status'] = "Student not found!";
+    }
+    header('Location: Subjects_enroll.php');
+    exit();
+}
+
+// Check if the form is submitted to remove all subjects
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['remove_all_subjects_btn'])) {
+    $student_id = $_POST['student_id_remove'];
+    
+    if (removeAllSubjects($student_id, $conn)) {
+        $_SESSION['auth_status'] = "All subjects removed successfully!";
+    } else {
+        $_SESSION['auth_status'] = "Failed to remove all subjects!";
+    }
+    header('Location: Subjects_enroll.php');
+    exit();
+}
+
+ob_end_flush(); // Flush (send) the output buffer and turn off output buffering
+?>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -47,137 +175,86 @@ include('sidebar.php');
     </div>
     <!-- /.content-header -->
 
-    <?php
-        include ('../includes/message.php');
-    ?>
+    <?php include ('../includes/message.php'); ?>
 
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Enroll Subjects</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="info" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Course</th>
-                                        <th>Subjects Enrolled</th>
-                                        <th>Add Subjects</th>
-                                        <th>Remove all subject for this student</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $query = "SELECT student_id, full_name, course, subjects FROM students";
-                                    $run_query = mysqli_query($conn, $query);
-                                    if ($run_query) {
-                                        if(mysqli_num_rows($run_query) > 0) {
-                                            while ($row = mysqli_fetch_assoc($run_query)) {
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $row['student_id'] ?></td>
-                                                    <td><?php echo $row['full_name'] ?></td>
-                                                    <td><?php echo $row['course'] ?></td>
-                                                    <td>
-                                                        <?php
-                                                        if ($row['subjects']) {
-                                                            // Convert the comma-separated string to an array
-                                                            $enrolled_subjects = explode(', ', $row['subjects']);
-                                                            // Output the subjects as a styled list
-                                                            echo '<ul>';
-                                                            foreach ($enrolled_subjects as $subject) {
-                                                                echo '<li>' . $subject . '</li>';
-                                                            }
-                                                            echo '</ul>';
-                                                        } else {
-                                                            echo "No subjects enrolled";
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <a href="../TheAdmin/Subject_add.php?student_id=<?php echo $row['student_id'] ?>" class="btn btn-info btn-sm">Add</a>
-                                                    </td>
-                                                    <td>
-                                                    
-                                                        <!-- Delete Subject Button -->
-                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteSubjectModal<?php echo $row['student_id']; ?>">Delete</button>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- Edit Subject Modal -->
-                                                <div class="modal fade" id="editSubjectModal<?php echo $row['student_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Subject</h1>
-                                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <form action="edit_Subject.php" method="post">
-                                                                <div class="modal-body">
-                                                                    <input type="hidden" name="student_id" value="<?php echo $row['student_id']; ?>">
-                                                                    <div class="form-group">
-                                                                        <label for="subject_name">Subject Name</label>
-                                                                        <input type="text" id="subject_name" name="subject_name" class="form-control" placeholder="Subject Name">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="submit" name="editSubjectbtn" class="btn btn-primary">Save Changes</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Delete Subject Modal -->
-                                                <div class="modal fade" id="deleteSubjectModal<?php echo $row['student_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Subject</h1>
-                                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <form action="Subject_remove.php" method="post">
-                                                                <div class="modal-body">
-                                                                    <input type="hidden" name="student_id" value="<?php echo $row['student_id']; ?>">
-                                                                    <p>Are you sure you want to delete this subject?</p>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="submit" name="deleteSubjectbtn" class="btn btn-primary">Yes, Delete!</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <?php
-                                            }
-                                        } else {
-                                            echo "<tr><td colspan='6'>No records found</td></tr>";
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='6'>Error: " . mysqli_error($conn) . "</td></tr>";
+                    <!-- Add subject form -->
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <div class="form-group">
+                            <label for="student_id">Select Student:</label>
+                            <select class="form-control" id="student_id" name="student_id" required>
+                                <?php
+                                // Fetch all students
+                                $query = "SELECT student_id, full_name FROM students";
+                                $stmt = $conn->prepare($query);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                if ($result && $result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option value='" . $row['student_id'] . "'>" . $row['full_name'] . "</option>";
                                     }
-                                    ?>
-                                </tbody>
-                            </table>
+                                }
+                                ?>
+                            </select>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                        <div class="form-group">
+                            <label for="subject_id">Select Subject:</label>
+                            <select class="form-control" id="subject_id" name="subject_id" required>
+                                <?php
+                                // Fetch all subjects
+                                $query = "SELECT subject_id, title FROM subjects";
+                                $stmt = $conn->prepare($query);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                if ($result && $result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option value='" . $row['subject_id'] . "'>" . $row['title'] . "</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="add_subject_btn">Enroll Subject</button>
+                    </form>
 
+                    <!-- Remove all subjects form -->
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="mt-4">
+                        <div class="form-group">
+                            <label for="student_id_remove">Select Student to Remove All Subjects:</label>
+                            <select class="form-control" id="student_id_remove" name="student_id_remove" required>
+                                <?php
+                                // Fetch all students
+                                $query = "SELECT student_id, full_name FROM students";
+                                $stmt = $conn->prepare($query);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                if ($result && $result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option value='" . $row['student_id'] . "'>" . $row['full_name'] . "</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-danger" name="remove_all_subjects_btn">Remove All Subjects</button>
+                    </form>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
 </div>
+<!-- /.content-wrapper -->
+
+<?php include('../includes/footer.php'); ?>
 
 <?php include("../includes/script.php"); ?>
-<?php include("footer.php"); ?>
+
+</div>
+<!-- ./wrapper -->
+</body>
+</html>
