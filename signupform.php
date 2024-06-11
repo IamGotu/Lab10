@@ -163,4 +163,10 @@
 </div>
 </body>
 </html>
-<?php include('includes/script.php'); ?>
+<?php
+    include('includes/script.php');
+?>
+<?php
+    include ('includes/footer.php')
+?>
+
