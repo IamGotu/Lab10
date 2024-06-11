@@ -73,7 +73,7 @@ include('sidebar.php');
             <div class="small-box bg-warning">
               <div class="inner">
                 <h3></h3>
-                <p>Assessments</p>
+                <p>Make Assessments</p>
               </div>
               <div class="icon">
                 <i class="fas fa-clipboard-check"></i>
