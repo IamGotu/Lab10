@@ -90,14 +90,21 @@ if ($_SESSION['role'] !== $required_role) {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="../TheInstructors/Assessments.php" class="nav-link">
+                    <a href="../TheInstructors/Assessments_Create.php" class="nav-link">
                         <i class="nav-icon fa fa-tasks"></i>
                         <p>
-                            Make Assessments
+                            Create Assessment
                         </p>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="../TheInstructors/Assessment_View.php" class="nav-link">
+                        <i class="nav-icon fa fa-tasks"></i>
+                        <p>
+                            View Assessment
+                        </p>
+                    </a>
+                </li>
 
             </ul>
         </nav>

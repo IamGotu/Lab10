@@ -96,6 +96,15 @@ if ($_SESSION['role'] !== $required_role) {
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="../TheStudents/Assessments_View.php" class="nav-link">
+                        <i class="nav-icon fa fa-check-circle"></i>
+                        <p>
+                            View Assessment
+                        </p>
+                    </a>
+                </li>
+
 
             </ul>
         </nav>

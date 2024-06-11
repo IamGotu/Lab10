@@ -123,6 +123,9 @@ if (isset($_POST['login_btn'])) {
                 if ($details_result->num_rows === 1) {
                     $details = $details_result->fetch_assoc();
                     $_SESSION['user_details'] = $details;
+                    if ($role === 'student') {
+                        $_SESSION['student_id'] = $details['student_id']; // Ensure student_id is set
+                    }
                 } else {
                     $_SESSION['auth_status'] = "User details not found.";
                     header('Location: ../loginform.php?error=User details not found.');
