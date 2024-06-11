@@ -3,6 +3,16 @@ session_start();
 
 $user_details = $_SESSION['user_details'];
 
+// Specificaly student access only
+$required_role = 'student';
+
+// Check if the user has the required role
+if ($_SESSION['role'] !== $required_role) {
+    $_SESSION['auth_status'] = "You do not have permission to access this page";
+    header('Location: ../logout.php');
+    exit();
+}
+
 // Include file for database connection
 include('../database/db_conn.php');
 

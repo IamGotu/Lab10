@@ -8,7 +8,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
     exit();
 }
 
-// Specificaly admin access only
+// Specificaly student access only
 $required_role = 'student';
 
 // Check if the user has the required role

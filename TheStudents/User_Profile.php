@@ -10,7 +10,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
 
 $user_details = $_SESSION['user_details'];
 
-// Specificaly admin access only
+// Specificaly student access only
 $required_role = 'student';
 
 // Check if the user has the required role
