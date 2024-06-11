@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2024 at 04:37 AM
+-- Generation Time: Jun 11, 2024 at 11:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,6 +53,27 @@ INSERT INTO `admin` (`id`, `admin_id`, `profile_picture`, `full_name`, `birthdat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `assessments`
+--
+
+CREATE TABLE `assessments` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assessments`
+--
+
+INSERT INTO `assessments` (`id`, `title`, `description`, `created_at`) VALUES
+(1, 'Activity 1', 'Submit a file', '2024-06-11 07:44:04'),
+(2, 'Activity 2', 'Submit a File', '2024-06-11 07:47:38');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `course`
 --
 
@@ -97,7 +118,7 @@ CREATE TABLE `instructors` (
 --
 
 INSERT INTO `instructors` (`id`, `instructor_id`, `profile_picture`, `full_name`, `birthdate`, `age`, `gender`, `email`, `phone_number`, `address`) VALUES
-(2, 4, 'user.png', 'Instr1', '1996-02-17', 28, 'MALE', 'instr1@gmail.com', '+639514810354', 'GSC'),
+(2, 4, 'avatar.png', 'Instr1', '1995-02-17', 29, 'MALE', 'instr1@gmail.com', '+639123456789', 'SINAWAL GSC'),
 (5, 6, 'user.png', 'instr2', '2002-03-03', 22, 'FEMALE', 'instr2@gmail.com', '+639514810354', 'GSC');
 
 -- --------------------------------------------------------
@@ -165,21 +186,26 @@ INSERT INTO `subjects` (`subject_id`, `title`, `dept_name`, `credits`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `submissions`
 --
 
-CREATE TABLE `user` (
-  `user_id` int(10) NOT NULL,
-  `username` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `Lastname` varchar(45) DEFAULT NULL,
-  `First_name` varchar(45) DEFAULT NULL,
-  `Middle_name` varchar(45) DEFAULT NULL,
-  `Email` varchar(45) DEFAULT NULL,
-  `Status` varchar(45) DEFAULT NULL,
-  `Active` varchar(45) DEFAULT NULL,
-  `verify_token` varchar(255) NOT NULL
+CREATE TABLE `submissions` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `submission_file` varchar(255) NOT NULL,
+  `submitted_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `grade` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `submissions`
+--
+
+INSERT INTO `submissions` (`id`, `assessment_id`, `student_id`, `submission_file`, `submitted_at`, `grade`) VALUES
+(4, 1, 2, '../SubmittedFile/Doc1.pdf', '2024-06-11 08:45:23', 0.00),
+(5, 1, 2, '../SubmittedFile/Doc1.pdf', '2024-06-11 08:46:05', 0.00),
+(6, 1, 2, '../SubmittedFile/Doc1.pdf', '2024-06-11 08:52:17', 0.00);
 
 -- --------------------------------------------------------
 
@@ -210,34 +236,6 @@ INSERT INTO `users` (`user_id`, `role`, `email`, `password`, `status`, `active`,
 (5, 'student', 'std3@gmail.com', 'Rumaken*', 'Pending', 'Offline', ''),
 (6, 'instructor', 'instr2@gmail.com', 'Rumaken*', 'Pending', 'Offline', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `user_profile`
---
-
-CREATE TABLE `user_profile` (
-  `user_id` int(11) NOT NULL,
-  `full_name` varchar(45) NOT NULL,
-  `birthdate` date NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `phone_number` varchar(45) NOT NULL,
-  `address` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `profile_picture` text NOT NULL,
-  `Status` varchar(45) NOT NULL,
-  `Active` varchar(45) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `verify_token` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user_profile`
---
-
-INSERT INTO `user_profile` (`user_id`, `full_name`, `birthdate`, `email`, `phone_number`, `address`, `password`, `profile_picture`, `Status`, `Active`, `created_at`, `verify_token`) VALUES
-(20, 'MARK JOHN JOPIA', '2000-02-07', 'markjohnjopia1@gmail.com', '09514810354', 'Sinawal', '12345', 'user.png', 'Verified', 'Online', '2024-06-08 09:04:08', '4e0c');
-
 --
 -- Indexes for dumped tables
 --
@@ -249,6 +247,12 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `admin_id` (`admin_id`),
   ADD KEY `admin_email` (`email`);
+
+--
+-- Indexes for table `assessments`
+--
+ALTER TABLE `assessments`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `course`
@@ -279,6 +283,13 @@ ALTER TABLE `subjects`
   ADD PRIMARY KEY (`subject_id`);
 
 --
+-- Indexes for table `submissions`
+--
+ALTER TABLE `submissions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `assessment_id` (`assessment_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -296,6 +307,12 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `assessments`
+--
+ALTER TABLE `assessments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `instructors`
 --
 ALTER TABLE `instructors`
@@ -306,6 +323,12 @@ ALTER TABLE `instructors`
 --
 ALTER TABLE `students`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `submissions`
+--
+ALTER TABLE `submissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -337,6 +360,12 @@ ALTER TABLE `instructors`
 ALTER TABLE `students`
   ADD CONSTRAINT `student_email` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `submissions`
+--
+ALTER TABLE `submissions`
+  ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`assessment_id`) REFERENCES `assessments` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
