@@ -78,7 +78,7 @@
 
         <div style="text-align: center;">
         <a href="../TheAdmin/Dashboard.php" class="btn">Accept</a>
-        <a href="../TheAdmin/Dashboard.php" class="btn">Decline (Back to home)</a>
+        <a href="../logout.php" class="btn">Decline (Logout)</a>
         </div>
     </div>
 

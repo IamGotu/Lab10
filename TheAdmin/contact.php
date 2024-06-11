@@ -15,7 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 130vh;
+            height: 150vh;
         }
 
         .container {

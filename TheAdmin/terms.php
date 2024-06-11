@@ -15,7 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 150vh;
         }
 
         .container {
@@ -91,8 +91,11 @@
     <!-- Button to go back to Dashboard.php -->
     <div style="text-align: center;">
         <a href="../TheAdmin/Dashboard.php" class="btn">Accept</a>
-        <a href="../TheAdmin/Dashboard.php" class="btn">Decline (Back to home)</a>
+        <a href="../logout.php" class="btn">Decline (Logout)</a>
     </div>
 </div>
+
+<!-- Your footer section or include footer.php here -->
+
 </body>
 </html>
