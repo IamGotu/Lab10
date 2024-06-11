@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2024 at 08:50 PM
+-- Generation Time: Jun 11, 2024 at 11:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -61,18 +61,15 @@ CREATE TABLE `assessments` (
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `subject_id` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `created_by` int(11) NOT NULL
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `assessments`
 --
 
-INSERT INTO `assessments` (`id`, `title`, `description`, `subject_id`, `created_at`, `created_by`) VALUES
-(11, 'Act 1', 'Research', '0', '2024-06-11 18:45:35', 0),
-(12, 'Act1', 'adsasd', '0', '2024-06-11 18:46:18', 0),
-(13, 'ads', 'asd', '0', '2024-06-11 18:49:18', 0);
+INSERT INTO `assessments` (`id`, `title`, `description`, `subject_id`, `created_at`) VALUES
+(16, 'act1', 'act1', 'BIO-101', '2024-06-11 20:06:45');
 
 -- --------------------------------------------------------
 
@@ -177,6 +174,13 @@ CREATE TABLE `submissions` (
   `grade` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `submissions`
+--
+
+INSERT INTO `submissions` (`id`, `assessment_id`, `student_id`, `submission_file`, `submitted_at`, `grade`) VALUES
+(7, 16, 2, '../SubmittedFile/JOPIA,MARK_JOHN May 28, 2024 - Activity.pdf', '2024-06-11 20:37:14', 200.00);
+
 -- --------------------------------------------------------
 
 --
@@ -230,6 +234,8 @@ ALTER TABLE `assessments`
 ALTER TABLE `instructors`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `instructor_id_2` (`instructor_id`),
+  ADD UNIQUE KEY `full_name` (`full_name`),
   ADD KEY `instructor_id` (`instructor_id`);
 
 --
@@ -275,7 +281,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `assessments`
 --
 ALTER TABLE `assessments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `instructors`
@@ -293,7 +299,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
