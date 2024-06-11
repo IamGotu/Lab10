@@ -64,7 +64,7 @@ include('sidebar.php');
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Course ID</th>
+                            <th>ID</th>
                             <th>Title</th>
                             <th>Department</th>
                             <th>Credit</th>
