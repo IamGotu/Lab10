@@ -46,18 +46,19 @@ include('sidebar.php');
 </div>
 <!-- /.content-header -->
 
-    <!-- Main content -->
+<?php
+  include ('../includes/message.php');
+?>
+
+<!-- Main content -->
 <section class="content">
     <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <?php   
-            if (isset($_SESSION['status'])) {
-              echo "<h4>".$_SESSION['status']."</h4>" ;
-              unset($_SESSION['status']);
-            }
 
-            ?>
+
+
+
 
             </div>
         </div>
