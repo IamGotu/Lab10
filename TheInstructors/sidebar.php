@@ -83,7 +83,7 @@ $user_details = $_SESSION['user_details'];
                     <a href="../TheInstructors/Assessments.php" class="nav-link">
                         <i class="nav-icon fa fa-tasks"></i>
                         <p>
-                            Assessments
+                            Make Assessments
                         </p>
                     </a>
                 </li>
