@@ -1,11 +1,12 @@
 <?php
+// Start session at the very beginning
 session_start();
 
 // Check if user is not logged in
 if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
-  $_SESSION['auth_status'] = "You need to be logged in to access this page";
-  header('Location: ../loginform.php');
-  exit();
+    $_SESSION['auth_status'] = "You need to be logged in to access this page";
+    header('Location: ../loginform.php');
+    exit();
 }
 
 // Specifically student access only
@@ -38,6 +39,25 @@ $submission_stmt->bind_param("i", $student_id);
 $submission_stmt->execute();
 $submitted_assessments = $submission_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $submitted_ids = array_column($submitted_assessments, 'assessment_id');
+
+if (isset($_GET['assessment_id'])) {
+    $assessment_id = $_GET['assessment_id'];
+
+    // Assume the task is successfully submitted for the sake of example
+    $submission_success = true;
+
+    if ($submission_success) {
+        // Fetch the assessment details
+        $assessment_query = "SELECT title FROM assessments WHERE id = ?";
+        $assessment_stmt = $conn->prepare($assessment_query);
+        $assessment_stmt->bind_param("i", $assessment_id);
+        $assessment_stmt->execute();
+        $assessment = $assessment_stmt->get_result()->fetch_assoc();
+
+        // Send confirmation email
+        // Placeholder for email sending code
+    }
+}
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -48,7 +68,7 @@ $submitted_ids = array_column($submitted_assessments, 'assessment_id');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">View Assessments </h1>
+            <h1 class="m-0">View Assessments</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -64,6 +84,7 @@ $submitted_ids = array_column($submitted_assessments, 'assessment_id');
 <?php
   include ('../includes/message.php');
 ?>
+
 
 <!-- Main content -->
 <section class="content">
@@ -88,7 +109,7 @@ $submitted_ids = array_column($submitted_assessments, 'assessment_id');
                     <?php if ($is_submitted): ?>
                       <p><strong>Status:</strong> Already Submitted</p>
                     <?php else: ?>
-                      <a href="Assessments_Code.php?assessment_id=<?php echo $row['id']; ?>">Submit Activity<br></a>
+                      <a href="Assessments_Code.php?assessment_id=<?php echo $row['id']; ?>">Submit Activity<br><br></a>
                     <?php endif; ?>
                   </li>
                 <?php endwhile; ?>

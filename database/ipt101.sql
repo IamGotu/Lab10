@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2024 at 11:15 PM
+-- Generation Time: Jun 12, 2024 at 08:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,7 +69,8 @@ CREATE TABLE `assessments` (
 --
 
 INSERT INTO `assessments` (`id`, `title`, `description`, `subject_id`, `created_at`) VALUES
-(16, 'act1', 'act1', 'BIO-101', '2024-06-11 20:06:45');
+(16, 'act1', 'act1', 'BIO-101', '2024-06-11 20:06:45'),
+(17, 'Activity 1', 'Send a file', 'BIO-101', '2024-06-12 05:59:47');
 
 -- --------------------------------------------------------
 
@@ -124,7 +125,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `student_id`, `profile_picture`, `full_name`, `birthdate`, `age`, `gender`, `email`, `phone_number`, `address`, `subjects`, `total_credits`) VALUES
-(0, 2, 'user.png', 'std1', '2003-02-04', 21, 'MALE', 'std1@gmail.com', '+639123456789', 'Sinawal', ', BIO-101', 4),
+(0, 2, 'user.png', 'std1', '2003-02-04', 21, 'MALE', 'markjohnjopia1@gmail.com', '+639123456789', 'Sinawal', ', BIO-101', 4),
 (1, 3, 'user.png', 'std2', '2010-06-08', 14, 'FEMALE', 'std2@gmail.com', '+639514810354', 'Sinawal GSC', ', BIO-301', 4),
 (10, 5, 'user.png', 'std3', '2001-03-06', 23, 'FEMALE', 'std3@gmail.com', '+639514810354', 'Davao', ', BIO-399', 3);
 
@@ -179,7 +180,7 @@ CREATE TABLE `submissions` (
 --
 
 INSERT INTO `submissions` (`id`, `assessment_id`, `student_id`, `submission_file`, `submitted_at`, `grade`) VALUES
-(7, 16, 2, '../SubmittedFile/JOPIA,MARK_JOHN May 28, 2024 - Activity.pdf', '2024-06-11 20:37:14', 200.00);
+(21, 16, 2, '../SubmittedFile/SystemUniversity - JOPIA.pdf', '2024-06-12 06:57:03', 0.00);
 
 -- --------------------------------------------------------
 
@@ -204,7 +205,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `role`, `email`, `password`, `status`, `active`, `verify_token`) VALUES
 (0, 'admin', 'admin@gmail.com', 'Rumaken*', 'Verified', 'Offline', '321041'),
 (1, 'admin', 'admin2@gmail.com', 'Rumaken*', 'Pending', 'Offline', ''),
-(2, 'student', 'std1@gmail.com', 'Rumaken*', 'Verified', 'Offline', '329547'),
+(2, 'student', 'markjohnjopia1@gmail.com', 'Rumaken*', 'Verified', 'Online', '329547'),
 (3, 'student', 'std2@gmail.com', 'Rumaken*', 'Pending', 'Offline', ''),
 (4, 'instructor', 'instr1@gmail.com', 'Rumaken*', 'Verified', 'Online', '410855'),
 (5, 'student', 'std3@gmail.com', 'Rumaken*', 'Pending', 'Offline', ''),
@@ -281,7 +282,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `assessments`
 --
 ALTER TABLE `assessments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `instructors`
@@ -299,7 +300,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`

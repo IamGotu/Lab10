@@ -33,6 +33,13 @@ include('../includes/header.php');
 include('topbar.php');
 include('sidebar.php');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-master/src/Exception.php';
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
+
 // Get the assessment ID from the URL
 $assessment_id = $_GET['assessment_id'];
 
@@ -82,9 +89,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Execute the statement
             if ($stmt->execute()) {
-                $_SESSION['auth_status'] = "Activity submitted successfully";
-                header('Location: Assessments_View.php?assessment_id='.$assessment_id.'&success=Activity submitted successfully');
-                exit();
+                // Send confirmation email
+                $user_email = $_SESSION['email']; // Assuming the user's email is stored in session
+                $assessment_title = $assessment['title'];
+                if (sendConfirmationEmail($user_email, $assessment_title)) {
+                    $_SESSION['auth_status'] = "Activity submitted successfully";
+                    header('Location: Assessments_View.php?assessment_id='.$assessment_id.'&success=Activity submitted successfully');
+                    exit();
+                } else {
+                    $_SESSION['auth_status'] = "Error occurred while sending confirmation email.";
+                    header('Location: Assessments_Code.php?assessment_id='.$assessment_id.'&error=Error occurred while sending confirmation email.');
+                    exit();
+                }
             } else {
                 $_SESSION['auth_status'] = "Error: " . $stmt->error;
                 header('Location: Assessments_Code.php?assessment_id='.$assessment_id.'&error=Error occurred while submitting the activity');
@@ -105,6 +121,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $stmt->close();
 ob_end_flush();
+
+// Function to send confirmation email
+function sendConfirmationEmail($to, $assessment_title) {
+    $mail = new PHPMailer(true);
+    try {
+        //Server settings
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'cocnambawan@gmail.com'; // Your Gmail
+        $mail->Password   = 'bkvm sirf keww nswm'; // Your Gmail app password
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port       = 465; // TCP port to connect to
+
+        //Recipients
+        $mail->setFrom('cocnambawan@gmail.com', 'Submission');
+        $mail->addAddress($to);  // Add a recipient
+        $mail->addReplyTo('cocnambawan@gmail.com', 'Support');
+
+        // Content
+        $mail->isHTML(true);  // Set email format to HTML
+        $mail->Subject = 'Task Submission Confirmation';
+        $mail->Body    = "Dear Student,<br><br>Thank you for submitting your task. Here are the details of your submission:<br><br>";
+        $mail->Body   .= "<strong>Task:</strong> $assessment_title<br><br>";
+        $mail->Body   .= "We appreciate your effort and look forward to your continued participation.<br><br>Best Regards,<br>Your School";
+        $mail->AltBody = "Dear Student,\n\nThank you for submitting your task. Here are the details of your submission:\n\n";
+        $mail->AltBody .= "Task: $assessment_title\n\n";
+        $mail->AltBody .= "We appreciate your effort and look forward to your continued participation.\n\nBest Regards,\nYour School";
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
 ?>
 
 <!-- Content Wrapper. Contains page content -->
